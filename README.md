@@ -26,7 +26,15 @@ optinally with a `--reload` flag for hot reloading.
 
 ### models.py
 
-`models.py` is where the pydantic models are kept. These allow for FastAPI to perform data validation and return typed data.
+`models.py` is where the SQLAlchemy models are kept. These allow for interfacing with the database with typed data.
+
+### schemas.py
+
+`schemas.py` is where the pydantic models are kept. These allow for FastAPI to perform data validation and return typed data.
+
+### crud.py
+
+`crud.py` is where CRUD utilities are kept, for creating, reading, updating, or deleting from the database.
 
 ### static
 
