@@ -1,18 +1,24 @@
-from pydantic import BaseModel, validator
-from typing import Optional
+from sqlalchemy import Column, ForeignKey, Integer, String, Float
+from sqlalchemy.orm import relationship
+from database import Base
 
-class Barcode(BaseModel):
-    data: str
-    name: Optional[str]
+class Donor(Base):
+    __tablename__ = "donors"
 
-    @validator('data')
-    def data_must_be_7_chars(cls, d):
-        if len(d) != 7:
-            raise ValueError("EAN-8 barcode data must contain only 7 characters")
-        return d
-    
-    @validator('data')
-    def data_must_be_numeric(cls, d):
-        if not d.isdecimal():
-            raise ValueError("EAN-8 barcode data must contain only numbers")
-        return d
+    donor_id = Column(Integer, primary_key=True)
+    donor_name = Column(String, unique=True, nullable=False)
+
+    items = relationship("Item", back_populates="donor")
+
+class Item(Base):
+    __tablename__ = "items"
+
+    item_id = Column(Integer, primary_key=True)
+    item_name = Column(String, nullable=False)
+    item_points = Column(Integer, nullable=False)
+    item_front_quantity = Column(Integer, nullable=False, default=0)
+    item_back_quantity = Column(Integer, nullable=False, default=0)
+    item_barcode = Column(String, nullable=False)
+    donor_id = Column(Integer, ForeignKey("donors.donor_id"))
+
+    donor = relationship("Donor", back_populates="items")

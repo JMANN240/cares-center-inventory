@@ -1,14 +1,28 @@
 from io import BytesIO
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import Response, FileResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 import barcode as bc
 from barcode.writer import ImageWriter
 from typing import Optional
-from models import *
+import crud
+import models
+import schemas
+from database import SessionLocal, engine
+from sqlalchemy.orm import Session
+
 
 # Setup
+
+models.Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 app = FastAPI()
 api = FastAPI()
@@ -53,8 +67,17 @@ async def search(request: Request):
 
 # Back-end
 
+@api.get("/donors", response_model=list[schemas.Donor])
+def read_donors(db: Session = Depends(get_db)):
+    donors = crud.get_donors(db)
+    return donors
+
+@api.post("/donors", response_model=schemas.Donor)
+def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
+    return crud.create_donor(db, donor=donor)
+
 @api.get("/barcode", status_code=200)
-async def get_barcode(barcode: Barcode):
+async def get_barcode(barcode: schemas.Barcode):
     barcodeImage = bc.get('ean8', barcode.data, writer=ImageWriter())
     barcodeFile = BytesIO()
     barcodeImage.write(barcodeFile, writerOptions)
