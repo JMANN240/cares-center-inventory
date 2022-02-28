@@ -76,6 +76,15 @@ def read_donors(db: Session = Depends(get_db)):
 def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
     return crud.create_donor(db, donor=donor)
 
+@api.post("/items", response_model=schemas.Item)
+def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
+    return crud.create_item(db, item=item)
+
+@api.delete("/items")
+def delete_items(db: Session = Depends(get_db)):
+    crud.delete_items(db)
+    return 200
+
 @api.get("/barcode", status_code=200)
 async def get_barcode(barcode: schemas.Barcode):
     barcodeImage = bc.get('ean8', barcode.data, writer=ImageWriter())
