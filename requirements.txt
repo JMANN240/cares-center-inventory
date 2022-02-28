@@ -3,6 +3,7 @@ asgiref==3.5.0
 click==8.0.3
 colorama==0.4.4
 fastapi==0.73.0
+greenlet==1.1.2
 h11==0.13.0
 httptools==0.3.0
 idna==3.3
@@ -14,6 +15,7 @@ python-barcode==0.13.1
 python-dotenv==0.19.2
 PyYAML==6.0
 sniffio==1.2.0
+SQLAlchemy==1.4.31
 starlette==0.17.1
 typing_extensions==4.0.1
 uvicorn==0.17.4
