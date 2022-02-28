@@ -22,11 +22,9 @@ def create_donor(db: Session, donor: schemas.DonorCreate):
     return db_donor
 
 def create_item(db: Session, item: schemas.ItemCreate):
-    item_barcodes = [row[0] for row in db.query(models.Item.item_barcode).all()]
-    print(item_barcodes)
+    item_barcodes = [item.item_barcode for item in db.query(models.Item).all()]
     while True:
         new_barcode = str(randint(0, 9999999)).rjust(7, '0')
-        print(f"trying {new_barcode}")
         if new_barcode not in item_barcodes:
             break
 
