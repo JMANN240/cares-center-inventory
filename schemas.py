@@ -1,8 +1,24 @@
 from pydantic import BaseModel, validator
 from typing import Optional
 
+# Manager
+class ManagerBase(BaseModel):
+    manager_name: str
+    passcode: int
 
+class ManagerCreate(ManagerBase):
+    pass
 
+class ManagerDelete(ManagerBase):
+    pass
+
+class Manager(ManagerBase):
+    manager_id:int
+
+    class Config:
+        orm_mode = True
+
+# Donor
 class DonorBase(BaseModel):
     donor_name: str
 
@@ -15,8 +31,7 @@ class Donor(DonorBase):
     class Config:
         orm_mode = True
 
-
-
+# Item
 class ItemBase(BaseModel):
     item_name: str
     item_points: int
@@ -34,7 +49,80 @@ class Item(ItemBase):
     class Config:
         orm_mode = True
 
+# ReplenishItem
+class ReplenishItemBase(BaseModel):
+    item_id: int
+    replenish_id: int
+    replenish_quantity: int
 
+class ReplenishItemCreate(ReplenishItemBase):
+    pass
+
+class ReplenishItem(ReplenishItemBase):
+    pass
+
+    class Config:
+        orm_mode = True
+
+# ReplenishHistory
+class ReplenishHistoryBase(BaseModel):
+    replenish_date: str
+    manager_id: int
+
+class ReplenishHistoryCreate(ReplenishHistoryBase):
+    pass
+
+class ReplenishHistory(ReplenishHistoryBase):
+    replenish_id: int
+
+    class Config:
+        orm_mode = True
+
+# TransactionItem
+class TransactionItemBase(BaseModel):
+    item_id: int
+    transaction_id: int
+    transaction_quantity: int
+
+class TransactionItemCreate(TransactionItemBase):
+    pass
+
+class TransactionItem(TransactionItemBase):
+    pass
+
+    class Config:
+        orm_mode = True
+
+# TransactionHistory
+class TransactionHistoryBase(BaseModel):
+    transaction_date: str
+    transaction_points: int
+    customer_id: int
+    manager_id: int
+
+class TransactionHistoryCreate(TransactionHistoryBase):
+    pass
+    
+class TransactionHistory(TransactionHistoryBase):
+    transaction_id: int
+
+    class Config:
+        orm_mode = True
+
+# DonorWeight
+class DonorWeightBase(BaseModel):
+    donor_id: int
+    transaction_id: int
+    weight: float
+
+class DonorWeightCreate(DonorWeightBase):
+    pass
+
+class DonorWeight(DonorWeightBase):
+    pass
+
+    class Config:
+        orm_mode = True
 
 class Barcode(BaseModel):
     data: str
