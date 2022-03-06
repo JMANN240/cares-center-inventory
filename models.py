@@ -87,3 +87,4 @@ class DonorWeight(Base):
 
     to_transaction = relationship("Transaction", back_populates="to_donor_weight")
     to_donor = relationship("Donor", back_populates="to_donor_weight")
+    

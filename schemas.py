@@ -138,3 +138,4 @@ class Barcode(BaseModel):
         if not d.isdecimal():
             raise ValueError("EAN-8 barcode data must contain only numbers")
         return d
+        
