@@ -36,7 +36,6 @@ class ItemBase(BaseModel):
     item_name: str
     item_points: int
     item_front_quantity: int
-    item_back_quantity: int
     donor_id: int
 
 class ItemCreate(ItemBase):
@@ -49,30 +48,30 @@ class Item(ItemBase):
     class Config:
         orm_mode = True
 
-# ReplenishItem
-class ReplenishItemBase(BaseModel):
+# ReplensihmentItem
+class ReplenishmentItemBase(BaseModel):
     item_id: int
     replenish_id: int
     replenish_quantity: int
 
-class ReplenishItemCreate(ReplenishItemBase):
+class ReplenishmentItemCreate(ReplenishmentItemBase):
     pass
 
-class ReplenishItem(ReplenishItemBase):
+class ReplensihmentItem(ReplenishmentItemBase):
     pass
 
     class Config:
         orm_mode = True
 
-# ReplenishHistory
-class ReplenishHistoryBase(BaseModel):
+# Replenishment
+class ReplenishmentBase(BaseModel):
     replenish_date: str
     manager_id: int
 
-class ReplenishHistoryCreate(ReplenishHistoryBase):
+class ReplenishmentCreate(ReplenishmentBase):
     pass
 
-class ReplenishHistory(ReplenishHistoryBase):
+class Replenishment(ReplenishmentBase):
     replenish_id: int
 
     class Config:
@@ -93,17 +92,17 @@ class TransactionItem(TransactionItemBase):
     class Config:
         orm_mode = True
 
-# TransactionHistory
-class TransactionHistoryBase(BaseModel):
+# Transaction
+class TransactionBase(BaseModel):
     transaction_date: str
     transaction_points: int
     customer_id: int
     manager_id: int
 
-class TransactionHistoryCreate(TransactionHistoryBase):
+class TransactionCreate(TransactionBase):
     pass
     
-class TransactionHistory(TransactionHistoryBase):
+class Transaction(TransactionBase):
     transaction_id: int
 
     class Config:
