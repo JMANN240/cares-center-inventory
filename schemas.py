@@ -1,8 +1,23 @@
 from pydantic import BaseModel, validator
 from typing import Optional
 
+# Manager
+class ManagerBase(BaseModel):
+    manager_name: str
 
+class ManagerCreate(ManagerBase):
+    passcode: int
 
+class ManagerDelete(ManagerBase):
+    pass
+
+class Manager(ManagerBase):
+    manager_id: int
+
+    class Config:
+        orm_mode = True
+
+# Donor
 class DonorBase(BaseModel):
     donor_name: str
 
@@ -15,13 +30,12 @@ class Donor(DonorBase):
     class Config:
         orm_mode = True
 
-
-
+# Item
 class ItemBase(BaseModel):
     item_name: str
     item_points: int
-    item_front_quantity: int
-    item_back_quantity: int
+    item_front_quantity: int = 0
+    item_back_quantity: int = 0
     donor_id: int
 
 class ItemCreate(ItemBase):
@@ -34,7 +48,80 @@ class Item(ItemBase):
     class Config:
         orm_mode = True
 
+# ReplensihmentItem
+class ReplenishmentItemBase(BaseModel):
+    item_id: int
+    replenish_id: int
+    replenish_quantity: int
 
+class ReplenishmentItemCreate(ReplenishmentItemBase):
+    pass
+
+class ReplensihmentItem(ReplenishmentItemBase):
+    pass
+
+    class Config:
+        orm_mode = True
+
+# Replenishment
+class ReplenishmentBase(BaseModel):
+    replenish_date: str
+    manager_id: int
+
+class ReplenishmentCreate(ReplenishmentBase):
+    pass
+
+class Replenishment(ReplenishmentBase):
+    replenish_id: int
+
+    class Config:
+        orm_mode = True
+
+# TransactionItem
+class TransactionItemBase(BaseModel):
+    item_id: int
+    transaction_id: int
+    transaction_quantity: int
+
+class TransactionItemCreate(TransactionItemBase):
+    pass
+
+class TransactionItem(TransactionItemBase):
+    pass
+
+    class Config:
+        orm_mode = True
+
+# Transaction
+class TransactionBase(BaseModel):
+    transaction_date: str
+    transaction_points: int
+    customer_id: int
+    manager_id: int
+
+class TransactionCreate(TransactionBase):
+    pass
+    
+class Transaction(TransactionBase):
+    transaction_id: int
+
+    class Config:
+        orm_mode = True
+
+# DonorWeight
+class DonorWeightBase(BaseModel):
+    donor_id: int
+    transaction_id: int
+    weight: float
+
+class DonorWeightCreate(DonorWeightBase):
+    pass
+
+class DonorWeight(DonorWeightBase):
+    pass
+
+    class Config:
+        orm_mode = True
 
 class Barcode(BaseModel):
     data: str
@@ -51,3 +138,4 @@ class Barcode(BaseModel):
         if not d.isdecimal():
             raise ValueError("EAN-8 barcode data must contain only numbers")
         return d
+        
