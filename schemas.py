@@ -6,13 +6,14 @@ class ManagerBase(BaseModel):
     manager_name: str
 
 class ManagerCreate(ManagerBase):
-    passcode: int
+    password: str
 
 class ManagerDelete(ManagerBase):
     pass
 
 class Manager(ManagerBase):
     manager_id: int
+    passhash: str
 
     class Config:
         orm_mode = True

@@ -31,7 +31,7 @@ class Manager(Base):
 
     manager_id = Column(Integer, primary_key=True)
     manager_name = Column(String, unique=True, nullable=False)
-    passcode = Column(String, nullable=False)
+    passhash = Column(String, nullable=False)
 
     to_replenishment = relationship("Replenishment", back_populates="to_manager")
     to_transaction = relationship("Transaction", back_populates="to_manager")
