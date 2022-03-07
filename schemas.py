@@ -66,13 +66,13 @@ class ReplensihmentItem(ReplenishmentItemBase):
 
 # Replenishment
 class ReplenishmentBase(BaseModel):
-    replenish_time: int
     manager_id: int
 
 class ReplenishmentCreate(ReplenishmentBase):
     pass
 
 class Replenishment(ReplenishmentBase):
+    replenish_time: int
     replenish_id: int
 
     class Config:
@@ -95,7 +95,6 @@ class TransactionItem(TransactionItemBase):
 
 # Transaction
 class TransactionBase(BaseModel):
-    transaction_time: int
     transaction_points: int
     customer_id: int
     manager_id: int
@@ -104,6 +103,7 @@ class TransactionCreate(TransactionBase):
     pass
     
 class Transaction(TransactionBase):
+    transaction_time: int
     transaction_id: int
 
     class Config:
