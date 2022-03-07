@@ -18,6 +18,7 @@ class Item(Base):
     item_name = Column(String, nullable=False)
     item_points = Column(Integer, nullable=False)
     item_front_quantity = Column(Integer, nullable=False, default=0)
+    item_back_quantity = Column(Integer, nullable=False, default=0)
     item_barcode = Column(String, nullable=False)
     donor_id = Column(Integer, ForeignKey("donor.donor_id"))
 
