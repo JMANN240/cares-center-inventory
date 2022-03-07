@@ -11,7 +11,7 @@ import schemas
 from database import SessionLocal, engine
 from sqlalchemy.orm import Session
 from typing import List
-from datetime import date
+from passlib.hash import pbkdf2_sha256
 
 # Setup
 
@@ -69,10 +69,13 @@ active_manager: schemas.Manager = None
 def register_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_db)):
     return crud.create_manager(db, manager=manager)
 
-@api.get("/manager/login", response_model=bool)
+@api.post("/manager/login", response_model=bool)
 def manager_login(username: str, password: str, db: Session = Depends(get_db)):
     global active_manager
-    active_manager = crud.verify_manager(db, username=username, password=password)
+    db_manager = crud.get_manager_by_manager_name(db, manager_name=username)
+    is_password_correct = pbkdf2_sha256.verify(password, db_manager.passhash)
+    if is_password_correct:
+        active_manager = db_manager
     return False if active_manager is None else True
 
 @api.post("/manager/logout")
