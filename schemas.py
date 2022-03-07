@@ -95,7 +95,6 @@ class TransactionItem(TransactionItemBase):
 
 # Transaction
 class TransactionBase(BaseModel):
-    transaction_points: int
     customer_id: int
     manager_id: int
 

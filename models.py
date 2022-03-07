@@ -61,7 +61,6 @@ class Transaction(Base):
 
     transaction_id = Column(Integer, primary_key=True)
     transaction_time = Column(Integer, nullable=False)
-    transaction_points = Column(Integer, nullable=False)
     customer_id = Column(Integer, nullable=False)
     manager_id = Column(Integer, ForeignKey("manager.manager_id"))
 

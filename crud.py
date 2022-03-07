@@ -80,6 +80,9 @@ def create_item(db: Session, item: schemas.ItemCreate):
 def get_items(db: Session):
     return db.query(models.Item).all()
     
+def get_item_by_item_id(db: Session, item_id: int):
+    return db.query(models.Item).filter(models.Item.item_id == item_id).one()
+    
 def get_items_by_donor_id(db: Session, donor_id: int):
     return db.query(models.Item).filter(models.Item.donor_id == donor_id).all()
 
@@ -185,6 +188,14 @@ def get_transactions_by_transaction_time_interval(db: Session, start_time: int, 
 
 def get_transactions_by_customer_id(db: Session, customer_id: int):
     return db.query(models.Transaction).filter(models.Transaction.customer_id == customer_id).all()
+
+def get_transaction_points_by_transaction_id(db: Session, transaction_id: int):
+    transaction_items = get_transaction_items_by_transaction_id(db, transaction_id)
+
+    transaction_points = 0
+    for transaction_item in transaction_items:
+        transaction_points += get_item_by_item_id(db, transaction_item.item_id).item_points
+    return 
 
 def  get_transactions_by_transaction_time_interval_and_customer_id(db: Session, start_time: int, end_time: int, customer_id: int):
     db_transactions = db.query(models.Transaction).filter(models.Transaction.customer_id == customer_id).all()
