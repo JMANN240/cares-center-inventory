@@ -109,7 +109,7 @@ def delete_item_by_item_id(db: Session, item_id: int):
 # replenishment
 def create_replenishment(db: Session, replenishment: schemas.ReplenishmentCreate):
     db_replenishment = models.Replenishment(
-        replenish_date = replenishment.replenish_date,
+        replenish_time = replenishment.replenish_time,
         manager_id = replenishment.manager_id,
     )
     db.add(db_replenishment)
@@ -120,12 +120,12 @@ def create_replenishment(db: Session, replenishment: schemas.ReplenishmentCreate
 def get_replenishment_by_replenish_id(db: Session, replenish_id: int):
     return db.query(models.Replenishment).filter(models.Replenishment.replenish_id == replenish_id).first()
 
-def get_replenishments_by_replenish_date_interval(db: Session, start_time: int, end_time: int):
+def get_replenishments_by_replenish_time_interval(db: Session, start_time: int, end_time: int):
     db_replenishments = db.query(models.Replenishment).all()
     result_lst = []
     
     for db_replenishment in db_replenishments:
-        replenishment_time = db_replenishment.replenish_date
+        replenishment_time = db_replenishment.replenish_time
         if start_time <= replenishment_time and replenishment_time <= end_time:
             result_lst.append(db_replenishment)
 
@@ -162,7 +162,7 @@ def delete_replenishment_item_by_replenish_id_and_item_id(db: Session, replenish
 # transaction
 def create_transaction(db: Session, transaction: schemas.TransactionCreate):
     db_transaction = models.Transaction(
-        transaction_date = transaction.transaction_date,
+        transaction_time = transaction.transaction_time,
         transaction_points = transaction.transaction_points,
         customer_id = transaction.customer_id,
         manager_id = transaction.manager_id,
@@ -172,12 +172,12 @@ def create_transaction(db: Session, transaction: schemas.TransactionCreate):
     db.refresh(db_transaction)
     return db_transaction
 
-def get_transactions_by_transaction_date_interval(db: Session, start_time: int, end_time: int):
+def get_transactions_by_transaction_time_interval(db: Session, start_time: int, end_time: int):
     db_transactions = db.query(models.Transaction).all()
     result_lst = []
     
     for db_transaction in db_transactions:
-        transaction_time = db_transaction.replenish_date
+        transaction_time = db_transaction.replenish_time
         if start_time <= transaction_time and transaction_time <= end_time:
             result_lst.append(db_transaction)
 
@@ -186,12 +186,12 @@ def get_transactions_by_transaction_date_interval(db: Session, start_time: int, 
 def get_transactions_by_customer_id(db: Session, customer_id: int):
     return db.query(models.Transaction).filter(models.Transaction.customer_id == customer_id).all()
 
-def  get_transactions_by_transaction_date_interval_and_customer_id(db: Session, start_time: int, end_time: int, customer_id: int):
+def  get_transactions_by_transaction_time_interval_and_customer_id(db: Session, start_time: int, end_time: int, customer_id: int):
     db_transactions = db.query(models.Transaction).filter(models.Transaction.customer_id == customer_id).all()
     result_lst = []
     
     for db_transaction in db_transactions:
-        transaction_time = db_transaction.transaction_date
+        transaction_time = db_transaction.transaction_time
         if start_time <= transaction_time and transaction_time <= end_time:
             result_lst.append(db_transaction)
 
@@ -242,23 +242,23 @@ def get_donor_weights_by_transaction_id(db: Session, transaction_id: int):
 def get_donor_weights_by_donor_id(db: Session, donor_id: int):
     return db.query(models.DonorWeight).filter(models.DonorWeight.donor_id == donor_id).all()
 
-def get_donor_weights_by_transaction_date_interval(db: Session, start_time: int, end_time: int):
+def get_donor_weights_by_transaction_time_interval(db: Session, start_time: int, end_time: int):
     db_donor_weights = db.query(models.DonorWeight).all()
     result_lst = []
     
     for db_donor_weight in db_donor_weights:
-        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).first().transaction_date
+        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).first().transaction_time
         if start_time <= donor_weight_time and donor_weight_time <= end_time:
             result_lst.append(db_donor_weight)
 
     return result_lst
 
-def get_donor_weights_by_transaction_date_interval_and_donor_id(db: Session, start_time: int, end_time: int, donor_id: int):
+def get_donor_weights_by_transaction_time_interval_and_donor_id(db: Session, start_time: int, end_time: int, donor_id: int):
     db_donor_weights = db.query(models.DonorWeight).filter(models.DonorWeight.donor_id == donor_id).all()
     result_lst = []
     
     for db_donor_weight in db_donor_weights:
-        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).first().transaction_date
+        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).first().transaction_time
         if start_time <= donor_weight_time and donor_weight_time<= end_time:
             result_lst.append(db_donor_weight)
 

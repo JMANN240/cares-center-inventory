@@ -40,7 +40,7 @@ class Replenishment(Base):
     __tablename__ = "replenishment"
 
     replenish_id = Column(Integer, primary_key=True)
-    replenish_date = Column(Integer, nullable=False)
+    replenish_time = Column(Integer, nullable=False)
     manager_id = Column(Integer, ForeignKey("manager.manager_id"))
 
     to_manager = relationship("Manager", back_populates="to_replenishment")
@@ -60,7 +60,7 @@ class Transaction(Base):
     __tablename__ = "transaction"
 
     transaction_id = Column(Integer, primary_key=True)
-    transaction_date = Column(Integer, nullable=False)
+    transaction_time = Column(Integer, nullable=False)
     transaction_points = Column(Integer, nullable=False)
     customer_id = Column(Integer, nullable=False)
     manager_id = Column(Integer, ForeignKey("manager.manager_id"))
