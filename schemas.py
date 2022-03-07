@@ -65,7 +65,7 @@ class ReplensihmentItem(ReplenishmentItemBase):
 
 # Replenishment
 class ReplenishmentBase(BaseModel):
-    replenish_date: str
+    replenish_date: int
     manager_id: int
 
 class ReplenishmentCreate(ReplenishmentBase):
@@ -94,7 +94,7 @@ class TransactionItem(TransactionItemBase):
 
 # Transaction
 class TransactionBase(BaseModel):
-    transaction_date: str
+    transaction_date: int
     transaction_points: int
     customer_id: int
     manager_id: int
