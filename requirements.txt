@@ -9,11 +9,13 @@ httptools==0.3.0
 idna==3.3
 Jinja2==3.0.3
 MarkupSafe==2.0.1
+passlib==1.7.4
 Pillow==9.0.1
 pydantic==1.9.0
 python-barcode==0.13.1
 python-dotenv==0.19.2
 PyYAML==6.0
+six==1.16.0
 sniffio==1.2.0
 SQLAlchemy==1.4.31
 starlette==0.17.1

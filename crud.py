@@ -3,12 +3,13 @@ from sqlalchemy import and_, or_
 from main import transaction
 import models, schemas
 from random import randint
+from passlib.hash import pbkdf2_sha256
 
 # manager
 def create_manager(db: Session, manager: schemas.ManagerCreate):
     db_manager = models.Manager(
         manager_name = manager.manager_name,
-        passcode = manager.passcode
+        passhash = pbkdf2_sha256.hash(manager.password)
     )
     db.add(db_manager)
     db.commit()
