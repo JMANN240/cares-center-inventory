@@ -4,6 +4,7 @@ from main import transaction
 import models, schemas
 from random import randint
 from passlib.hash import pbkdf2_sha256
+import time
 
 # manager
 def create_manager(db: Session, manager: schemas.ManagerCreate):
@@ -113,7 +114,7 @@ def delete_item_by_item_id(db: Session, item_id: int):
 # replenishment
 def create_replenishment(db: Session, replenishment: schemas.ReplenishmentCreate):
     db_replenishment = models.Replenishment(
-        replenish_time = replenishment.replenish_time,
+        replenish_time = int(time.time()),
         manager_id = replenishment.manager_id,
     )
     db.add(db_replenishment)
@@ -166,8 +167,7 @@ def delete_replenishment_item_by_replenish_id_and_item_id(db: Session, replenish
 # transaction
 def create_transaction(db: Session, transaction: schemas.TransactionCreate):
     db_transaction = models.Transaction(
-        transaction_time = transaction.transaction_time,
-        transaction_points = transaction.transaction_points,
+        transaction_time = int(time.time()),
         customer_id = transaction.customer_id,
         manager_id = transaction.manager_id,
     )
