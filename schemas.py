@@ -6,13 +6,14 @@ class ManagerBase(BaseModel):
     manager_name: str
 
 class ManagerCreate(ManagerBase):
-    passcode: int
+    password: str # When creating a manager it takes the actual password to hash and then store
 
 class ManagerDelete(ManagerBase):
     pass
 
 class Manager(ManagerBase):
     manager_id: int
+    passhash: str # But when returning a manager it returns the stored hash
 
     class Config:
         orm_mode = True
@@ -65,13 +66,13 @@ class ReplensihmentItem(ReplenishmentItemBase):
 
 # Replenishment
 class ReplenishmentBase(BaseModel):
-    replenish_date: str
     manager_id: int
 
 class ReplenishmentCreate(ReplenishmentBase):
     pass
 
 class Replenishment(ReplenishmentBase):
+    replenish_time: int
     replenish_id: int
 
     class Config:
@@ -94,8 +95,6 @@ class TransactionItem(TransactionItemBase):
 
 # Transaction
 class TransactionBase(BaseModel):
-    transaction_date: str
-    transaction_points: int
     customer_id: int
     manager_id: int
 
@@ -103,6 +102,7 @@ class TransactionCreate(TransactionBase):
     pass
     
 class Transaction(TransactionBase):
+    transaction_time: int
     transaction_id: int
 
     class Config:
