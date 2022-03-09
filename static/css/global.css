@@ -1,0 +1,44 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.flex {
+    display: flex;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.centered {
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    padding: 2vw 2vh;
+    margin: 2vw 2vh;
+    border: 1px solid black;
+    border-radius: 2vw;
+}
+
+input {
+    padding: 1vw 1vh;
+    margin: 1vw 1vh;
+    border-radius: 2vw;
+    border: 1px solid black;
+}
+
+button {
+    padding: 1vw 1vh;
+    margin: 1vw 1vh;
+    border-radius: 2vw;
+    border: 1px solid black;
+}
