@@ -94,6 +94,9 @@ def get_items_by_donor_name(db: Session, donor_name: str):
 def get_items_by_point_interval(db: Session, lhs: int, rhs: int):
     return db.query(models.Item).filter(and_(models.Item.item_points >= lhs, models.Item.item_points <= rhs)).all()
 
+def get_item_by_item_barcode(db: Session, barcode: str):
+    return db.query(models.Item).filter(models.Item.item_barcode == barcode).first()
+
 def update_item_name_by_item_id(db: Session, item_id: int, new_item_name: str):
     db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_name: new_item_name})
     db.commit()
