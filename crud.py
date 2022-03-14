@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_
-from main import transaction
 import models, schemas
 from random import randint
 from passlib.hash import pbkdf2_sha256
