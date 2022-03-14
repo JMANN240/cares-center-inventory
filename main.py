@@ -61,7 +61,7 @@ writerOptions = {
 
 def check_auth(route):
     async def modified_route(request: Request, user_id: Optional[int] = Cookie(None)):
-        if user_id is not None:
+        if user_id is not None or request.url.path == '/login':
             response = await route(request)
         else:
             response = RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
@@ -80,16 +80,22 @@ async def index(request: Request):
 async def login(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
+@app.get("/register")
+async def register(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
 @app.get("/replenish")
 @check_auth
 async def replenish(request: Request):
     return templates.TemplateResponse("replenish.html", {"request": request})
 
 @app.get("/transaction")
+@check_auth
 async def transaction(request: Request):
     return templates.TemplateResponse("transaction.html", {"request": request})
 
 @app.get("/search")
+@check_auth
 async def search(request: Request):
     return templates.TemplateResponse("search.html", {"request": request})
 
@@ -106,7 +112,7 @@ def manager_login(login: schemas.Login, response: Response, db: Session = Depend
         is_password_correct = pbkdf2_sha256.verify(login.password, db_manager.passhash)
     
         if is_password_correct:
-            response.set_cookie(key="user_id", value=db_manager.manager_id)
+            response.set_cookie(key="user_id", value=db_manager.manager_id, secure=True)
             response.status_code = 200
             return response
         else:
