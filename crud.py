@@ -17,7 +17,7 @@ def create_manager(db: Session, manager: schemas.ManagerCreate):
     return db_manager
 
 def get_manager_by_manager_name(db: Session, manager_name: str):
-    db_manager = db.query(models.Manager).filter(models.Manager.manager_name == manager_name).first()
+    db_manager = db.query(models.Manager).filter(models.Manager.manager_name == manager_name).one()
     return db_manager
 
 def update_manager_name_by_manager_id(db: Session, manager_id: int, new_manager_name: str):
@@ -28,7 +28,7 @@ def get_managers(db: Session):
     return db.query(models.Manager).all()
 
 def delete_manager_by_manager_id(db: Session, manager_id: int):
-    manager_to_delete = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).first()
+    manager_to_delete = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).one()
     db.delete(manager_to_delete)
     db.commit()
 
@@ -43,7 +43,7 @@ def create_donor(db: Session, donor: schemas.DonorCreate):
     return db_donor
 
 def get_donor_by_donor_name(db: Session, donor_name: str):
-    return db.query(models.Donor).filter(models.Donor.donor_name == donor_name).first()
+    return db.query(models.Donor).filter(models.Donor.donor_name == donor_name).one()
 
 def get_donors(db: Session):
     return db.query(models.Donor).all()
@@ -53,7 +53,7 @@ def update_donor_name_by_donor_id(db: Session, donor_id: int, new_donor_name: st
     db.commit()
 
 def delete_donor_by_donor_id(db: Session, donor_id: int):
-    donor_to_delete = db.query(models.Donor).filter(models.Donor.donor_id == donor_id).first()
+    donor_to_delete = db.query(models.Donor).filter(models.Donor.donor_id == donor_id).one()
     db.delete(donor_to_delete)
     db.commit()
 
@@ -109,7 +109,7 @@ def update_item_back_quantity_by_item_id(db: Session, item_id: int, new_item_bac
     db.commit()
 
 def delete_item_by_item_id(db: Session, item_id: int):
-    item_to_delete = db.query(models.Item).filter(models.Item.item_id == item_id).first()
+    item_to_delete = db.query(models.Item).filter(models.Item.item_id == item_id).one()
     db.delete(item_to_delete)
     db.commit()
 
@@ -125,7 +125,7 @@ def create_replenishment(db: Session, replenishment: schemas.ReplenishmentCreate
     return db_replenishment
 
 def get_replenishment_by_replenish_id(db: Session, replenish_id: int):
-    return db.query(models.Replenishment).filter(models.Replenishment.replenish_id == replenish_id).first()
+    return db.query(models.Replenishment).filter(models.Replenishment.replenish_id == replenish_id).one()
 
 def get_replenishments_by_replenish_time_interval(db: Session, start_time: int, end_time: int):
     db_replenishments = db.query(models.Replenishment).all()
@@ -142,7 +142,7 @@ def get_replenishments_by_manager_id(db: Session, manager_id: int):
     return db.query(models.Replenishment).filter(models.Replenishment.manager_id == manager_id).all()
 
 def delete_replenishment_by_replenish_id(db: Session, replenish_id: int):
-    replenishment_to_delete = db.query(models.Replenishment).filter(models.Replenishment.replenish_id == replenish_id).first()
+    replenishment_to_delete = db.query(models.Replenishment).filter(models.Replenishment.replenish_id == replenish_id).one()
     db.delete(replenishment_to_delete)
     db.commit()
 
@@ -215,7 +215,7 @@ def get_transactions_by_manager_id(db: Session, manager_id: int):
     return db.query(models.Transaction).filter(models.Transaction.manager_id == manager_id).all()
 
 def delete_transaction_by_transaction_id(db: Session, transaction_id: int):
-    transaction = db.query(models.Transaction).filter(models.Transaction.transaction_id == transaction_id).first()
+    transaction = db.query(models.Transaction).filter(models.Transaction.transaction_id == transaction_id).one()
     db.delete(transaction)
     db.commit()
 
@@ -261,7 +261,7 @@ def get_donor_weights_by_transaction_time_interval(db: Session, start_time: int,
     result_lst = []
     
     for db_donor_weight in db_donor_weights:
-        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).first().transaction_time
+        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).one().transaction_time
         if start_time <= donor_weight_time and donor_weight_time <= end_time:
             result_lst.append(db_donor_weight)
 
@@ -272,7 +272,7 @@ def get_donor_weights_by_transaction_time_interval_and_donor_id(db: Session, sta
     result_lst = []
     
     for db_donor_weight in db_donor_weights:
-        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).first().transaction_time
+        donor_weight_time = db.query(models.Transaction).filter(models.Transaction.transaction_id == db_donor_weight.transaction_id).one().transaction_time
         if start_time <= donor_weight_time and donor_weight_time<= end_time:
             result_lst.append(db_donor_weight)
 
