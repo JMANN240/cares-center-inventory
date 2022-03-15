@@ -99,6 +99,10 @@ async def transaction(request: Request):
 async def search(request: Request):
     return templates.TemplateResponse("search.html", {"request": request})
 
+@app.get("/barcode")
+async def barcode(request: Request):
+    return templates.TemplateResponse("barcode.html", {"request": request})
+
 # Back-end
 
 @api.post("/manager/register", response_model=schemas.Manager)
