@@ -123,6 +123,8 @@ class DonorWeight(DonorWeightBase):
     class Config:
         orm_mode = True
 
+# Barcodes
+
 class Barcode(BaseModel):
     data: str
     name: Optional[str]
@@ -138,4 +140,9 @@ class Barcode(BaseModel):
         if not d.isdecimal():
             raise ValueError("EAN-8 barcode data must contain only numbers")
         return d
-        
+
+# Logging in
+
+class Login(BaseModel):
+    username: str
+    password: str
