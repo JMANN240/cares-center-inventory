@@ -4,7 +4,7 @@ let username_input = document.querySelector('#username');
 let password_input = document.querySelector('#password');
 let login_button = document.querySelector('#login');
 
-login_button.addEventListener('click', async (e) => {
+let submitLogin = async () => {
     let res = await fetch('/api/manager/login', {
         method: 'POST',
         headers: {
@@ -19,5 +19,13 @@ login_button.addEventListener('click', async (e) => {
         let redirect = params.get('redirect') ?? urlsafe_b64encode('/');
         redirect = urlsafe_b64decode(redirect);
         window.location.href = redirect;
+    }
+}
+
+login_button.addEventListener('click', submitLogin);
+
+document.addEventListener('keydown', (e) => {
+    if(e.key == 'Enter') {
+        submitLogin();
     }
 });
