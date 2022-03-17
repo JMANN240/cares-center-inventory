@@ -157,6 +157,10 @@ def read_items(db: Session = Depends(get_db)):
 def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_item(db, item=item)
 
+@api.get("/transaction", response_class=List[schemas.Transaction])
+def read_transactions(db: Session = Depends(get_db)):
+    return crud.get_transactions(db)
+
 @api.post("/transaction", response_model=schemas.Transaction)
 def create_transaction(transaction: schemas.TransactionCreate, db: Session = Depends(get_db)):
     return crud.create_transaction(db, transaction)
@@ -184,6 +188,10 @@ def create_transaction_donor_weights(donor_weights: List[schemas.DonorWeightCrea
         db_donor_weight = crud.create_donor_weight(db, donor_weight)
         weights.append(db_donor_weight)
     return weights
+
+@api.get("/replenishment", response_class=List[schemas.Replenishment])
+def read_replenishments(db: Session = Depends(get_db)):
+    return crud.get_replenishment(db)
 
 @api.post("/replenishment", response_model=schemas.Replenishment)
 def create_replenishment(replenishment: schemas.ReplenishmentCreate, db: Session = Depends(get_db)):
