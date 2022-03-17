@@ -65,7 +65,6 @@ h1{
     text-align: center;
     font-size: 10vh;
     text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
-
     animation: 2s ease-out 0s 1 fadeIn;
 }
 
@@ -81,7 +80,6 @@ input {
     font-weight: bold;
     font-size: 4vh;
     text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-    
     animation: 2s ease-out 0s 1 fadeIn;
 }
 
@@ -91,7 +89,6 @@ input::placeholder{
 
 input:focus {
     outline: 0px;
-    
 }
 
 input:focus::placeholder {
@@ -99,7 +96,7 @@ input:focus::placeholder {
     text-shadow: 1px 1px 0;
 }
 
-button{
+button {
     margin: 1vh;
     padding: 1vh;
     min-width: 40vh;
@@ -111,9 +108,7 @@ button{
     background-color: rgba(255,255,255,1);
     font-size: 4vh;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    
     animation: 2s ease-out 0s 1 fadeIn;
-
 }
 
 
