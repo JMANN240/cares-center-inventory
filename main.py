@@ -103,13 +103,15 @@ async def search(request: Request):
 async def barcode(request: Request):
     return templates.TemplateResponse("barcode.html", {"request": request})
 
+
+
 # Back-end
 
 @api.post("/manager/register", response_model=schemas.Manager)
 def register_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_db)):
     return crud.create_manager(db, manager=manager)
 
-@api.post("/manager/login", response_model=bool)
+@api.post("/manager/login")
 def manager_login(login: schemas.Login, response: Response, db: Session = Depends(get_db)):
     try:
         db_manager = crud.get_manager_by_manager_name(db, manager_name=login.username)
@@ -140,7 +142,7 @@ def read_managers(db: Session = Depends(get_db)):
 def read_donors(db: Session = Depends(get_db)):
     return crud.get_donors(db)
 
-@api.post("/donor", response_model=schemas.DonorCreate)
+@api.post("/donor", response_model=schemas.Donor)
 def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
     return crud.create_donor(db, donor=donor)
 
@@ -148,9 +150,25 @@ def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
 def read_items(db: Session = Depends(get_db)):
     return crud.get_items(db)
 
-@api.post("/item", response_model=schemas.ItemCreate)
+@api.post("/item", response_model=schemas.Item)
 def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_item(db, item=item)
+
+@api.post("/transaction", response_model=schemas.Transaction)
+def create_transaction(transaction: schemas.TransactionCreate, db: Session = Depends(get_db)):
+    return crud.create_transaction(db, transaction)
+
+@api.post("/transaction/item", response_model=schemas.TransactionItem)
+def create_transaction_item(transaction_item: schemas.TransactionItemCreate, db: Session = Depends(get_db)):
+    return crud.create_transaction_item(db, transaction_item)
+
+@api.post("/transaction/items", response_model=List[schemas.TransactionItem])
+def create_transaction_item(transaction_items: List[schemas.TransactionItemCreate], db: Session = Depends(get_db)):
+    items = []
+    for transaction_item in transaction_items:
+        db_item = crud.create_transaction_item(db, transaction_item)
+        items.append(db_item)
+    return items
 
 @api.get("/barcode", status_code=200)
 async def get_barcode(barcode: schemas.Barcode):

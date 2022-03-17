@@ -1,7 +1,5 @@
 from pydantic import BaseModel, validator
-from typing import Optional, List
-
-from main import replenish, transaction
+from typing import Optional
 
 # Manager
 class ManagerBase(BaseModel):
