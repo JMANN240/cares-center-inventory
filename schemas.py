@@ -1,5 +1,7 @@
 from pydantic import BaseModel, validator
-from typing import Optional
+from typing import Optional, List
+
+from main import replenish, transaction
 
 # Manager
 class ManagerBase(BaseModel):
@@ -146,3 +148,13 @@ class Barcode(BaseModel):
 class Login(BaseModel):
     username: str
     password: str
+
+# Creating replenishments and transactions
+
+class ReplenishWithItems(BaseModel):
+    replenish: ReplenishmentCreate
+    replenish_items: List[ReplenishmentItemCreate]
+
+class TransactionWithItems(BaseModel):
+    transaction: TransactionCreate
+    transaction_items: List[TransactionItemCreate]
