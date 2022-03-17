@@ -173,6 +173,34 @@ def create_transaction_item(transaction_items: List[schemas.TransactionItemCreat
         items.append(db_item)
     return items
 
+@api.post("/transaction/weight", response_model=schemas.DonorWeight)
+def create_transaction_donor_weight(donor_weight: schemas.DonorWeightCreate, db: Session = Depends(get_db)):
+    return crud.create_donor_weight(db, donor_weight)
+
+@api.post("/transaction/weights", response_model=List[schemas.DonorWeight])
+def create_transaction_donor_weights(donor_weights: List[schemas.DonorWeightCreate], db: Session = Depends(get_db)):
+    weights = []
+    for donor_weight in donor_weights:
+        db_donor_weight = crud.create_donor_weight(db, donor_weight)
+        weights.append(db_donor_weight)
+    return weights
+
+@api.post("/replenishment", response_model=schemas.Replenishment)
+def create_replenishment(replenishment: schemas.ReplenishmentCreate, db: Session = Depends(get_db)):
+    return crud.create_replenishment(db, replenishment)
+
+@api.post("/replenishment/item", response_model=schemas.ReplensihmentItem)
+def create_replenishment_item(replenishment_item: schemas.ReplenishmentItemCreate, db: Session = Depends(get_db)):
+    return crud.create_replenishment_item(db, replenishment_item)
+
+@api.post("/replenishment/items", response_model=List[schemas.ReplensihmentItem])
+def create_replenishment_item(replenishment_items: List[schemas.ReplenishmentItemCreate], db: Session = Depends(get_db)):
+    items = []
+    for replenishment_item in replenishment_items:
+        db_item = crud.create_replenishment_item(db, replenishment_item)
+        items.append(db_item)
+    return items
+
 @api.get("/barcode", status_code=200)
 async def get_barcode(barcode: schemas.Barcode):
     barcodeImage = bc.get('ean8', barcode.data, writer=ImageWriter())
