@@ -133,6 +133,9 @@ def create_replenishment(db: Session, replenishment: schemas.ReplenishmentCreate
     db.refresh(db_replenishment)
     return db_replenishment
 
+def get_replenishments(db: Session):
+    return db.query(models.Replenishment).all()
+
 def get_replenishment_by_replenish_id(db: Session, replenish_id: int):
     return db.query(models.Replenishment).filter(models.Replenishment.replenish_id == replenish_id).one()
 
@@ -186,6 +189,9 @@ def create_transaction(db: Session, transaction: schemas.TransactionCreate):
     db.commit()
     db.refresh(db_transaction)
     return db_transaction
+
+def get_transactions(db: Session):
+    return db.query(models.Transaction).all()
 
 def get_transactions_by_transaction_time_interval(db: Session, start_time: int, end_time: int):
     db_transactions = db.query(models.Transaction).all()
