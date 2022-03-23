@@ -45,6 +45,9 @@ def create_donor(db: Session, donor: schemas.DonorCreate):
 def get_donor_by_donor_name(db: Session, donor_name: str):
     return db.query(models.Donor).filter(models.Donor.donor_name == donor_name).one()
 
+def get_donor_by_donor_id(db: Session, donor_id: int):
+    return db.query(models.Donor).filter(models.Donor.donor_id == donor_id).one()
+
 def get_donors(db: Session):
     return db.query(models.Donor).all()
 

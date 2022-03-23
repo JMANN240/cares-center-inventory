@@ -142,6 +142,10 @@ def read_managers(db: Session = Depends(get_db)):
 def read_donors(db: Session = Depends(get_db)):
     return crud.get_donors(db)
 
+@api.get("/donor/{donor_id}", response_model=schemas.Donor)
+def read_donors_by_donnor_id(donor_id: int, db: Session = Depends(get_db)):
+    return crud.get_donor_by_donor_id(db, donor_id)
+
 @api.post("/donor", response_model=schemas.Donor)
 def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
     return crud.create_donor(db, donor=donor)
@@ -149,6 +153,10 @@ def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
 @api.get("/item", response_model=List[schemas.Item])
 def read_items(db: Session = Depends(get_db)):
     return crud.get_items(db)
+
+@api.get("/item/{item_barcode}", response_model=schemas.Item)
+def read_item_by_barcode(item_barcode: str, db: Session = Depends(get_db)):
+    return crud.get_item_by_item_barcode(db, item_barcode)
 
 @api.post("/item", response_model=schemas.Item)
 def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
@@ -207,8 +215,8 @@ def create_replenishment_item(replenishment_items: List[schemas.ReplenishmentIte
     return items
 
 @api.get("/barcode", status_code=200)
-async def get_barcode(barcode: schemas.Barcode):
-    barcodeImage = bc.get('ean8', barcode.data, writer=ImageWriter())
+async def get_barcode(data: str):
+    barcodeImage = bc.get('ean8', data, writer=ImageWriter())
     barcodeFile = BytesIO()
     barcodeImage.write(barcodeFile, writerOptions)
     barcodeFile.seek(0)
