@@ -45,6 +45,10 @@ body {
     display: flex;
 }
 
+.nowrap {
+    flex-wrap: nowrap;
+}
+
 .row {
     flex-direction: row;
 }
@@ -56,6 +60,15 @@ body {
 .centered {
     align-items: center;
     justify-content: center;
+}
+
+.even {
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.outlined { 
+    outline: 1px solid black;
 }
 
 h1{
