@@ -48,6 +48,10 @@ body {
     display: flex;
 }
 
+.nowrap {
+    flex-wrap: nowrap;
+}
+
 .row {
     flex-direction: row;
 }
@@ -61,7 +65,16 @@ body {
     justify-content: center;
 }
 
-h1 {
+.even {
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.outlined { 
+    outline: 1px solid black;
+}
+
+h1{
     margin: 0vh 2vw 2vh 2vw;
     color: white;
     font-weight: lighter;
