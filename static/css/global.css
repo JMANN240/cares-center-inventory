@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
+* {
+    font-family: "Roboto", sans-serif;
+}
+
 @keyframes slideInTop {
     0% {
         transform: translateY(-80%);
@@ -23,6 +27,8 @@
 body {
     width: 100vw;
     height: 100vh;
+    margin: 0;
+    padding: 0;
 
     background: #141e30; /* fallback for old browsers */
     background: -webkit-linear-gradient(
@@ -40,8 +46,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    font-family: "Roboto", sans-serif;
 }
 
 .flex {
@@ -74,7 +78,7 @@ body {
     outline: 1px solid black;
 }
 
-h1{
+h1 {
     margin: 0vh 2vw 2vh 2vw;
     color: white;
     font-weight: lighter;
