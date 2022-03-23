@@ -103,6 +103,11 @@ async def search(request: Request):
 async def barcode(request: Request):
     return templates.TemplateResponse("barcode.html", {"request": request})
 
+@app.get("/managers")
+@check_auth
+async def managers(request: Request):
+    return templates.TemplateResponse("managers.html", {"request": request})
+
 
 
 # Back-end

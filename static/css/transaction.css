@@ -6,24 +6,42 @@ body {
     grid-template-rows: 50vh 35vh 15vh;
 }
 
-.item {
-    background-color: grey;
+.donor-weight, .item {
+    background-color: white;
+    border-radius: 20px;
+    margin: 1vh;
+    padding: 0.5vh;
+} 
+
+h1 {
+    margin: 0;
+    padding: 0;
+    color: navy;
+    font-size: 6vw;
 }
 
 h2 {
     margin: 0;
     padding: 0;
-    color: white;
+    color: navy;
+    
 }
 
-button {
-    margin: 0.1vh;
-    padding: 0.1vh;
-    min-width: unset;
-    width: 2ch;
-    border: 0;
-    font-size: large;
+h1.count, h2.count {
+    padding: 0.5ch;
+    border: 1px solid navy;
     border-radius: 0.5ch;
+}
+
+button.small {
+    margin: 0.5ch;
+    padding: 1ch;
+    min-width: unset;
+    width: 3ch;
+    height: 3ch;
+    border: 1px solid navy;
+    font-size: large;
+    border-radius: 1.5ch;
 }
 
 #camera {
@@ -42,7 +60,7 @@ button {
     width: 100%;
     height: 100%;
     grid-area: 1 / 3 / 3 / 4;
-    outline: 1px solid black;
+    
     overflow-y: scroll;
 }
 
@@ -66,4 +84,21 @@ button {
     height: 100%;
     grid-area: 3 / 1 / 4 / 4;
     outline: 1px solid black;
+}
+
+input[type="number"] {
+    background-color: white;
+    border-radius: 1ch;
+    font-size: 3vw;
+    border: 1px solid black;
+    color: lightgray;
+}
+
+input[type="number"]::placeholder {
+    color: unset;
+}
+
+input[type="number"]:focus::placeholder {
+    color: unset;
+    text-shadow: unset;
 }
