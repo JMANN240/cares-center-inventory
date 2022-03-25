@@ -56,6 +56,14 @@ body {
     flex-wrap: nowrap;
 }
 
+.wrap {
+    flex-wrap: wrap;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
 .row {
     flex-direction: row;
 }
@@ -79,6 +87,10 @@ body {
 
 .outlined { 
     outline: 1px solid black;
+}
+
+.fade-in {
+    animation: 2s ease-out 0s 1 fadeIn;
 }
 
 h1 {
@@ -135,7 +147,6 @@ button {
     background-color: rgba(255, 255, 255, 1);
     font-size: 4vh;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    animation: 2s ease-out 0s 1 fadeIn;
 }
 
 button:active{
