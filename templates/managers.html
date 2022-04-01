@@ -8,13 +8,35 @@
     <script defer src="/static/js/index.js"></script>
 
     <link href="/static/css/global.css" rel ="stylesheet">
+    <link href="/static/css/managers.css" rel = "stylesheet">
 
     <title>Edit Managers</title> 
 </head>
 
 <body>
     <h1>Edit Managers</h1>
-    
+    <div id = "box" class = "flex column centered">
+
+        <div id = "top-bar" class = "flex row"> 
+            <div id = "first-name-column" class = "flex column">
+                First Name
+            </div>    
+            <div id = "last-name-column" class = "flex column">
+                Last Name
+            </div>        
+                
+            <div id = "username-column" class = "flex column">
+                User Name
+            </div> 
+            <button type="button" id = "add-entry">Add Manager</button> 
+        
+        </div>
+        <div id = "manager-entries">
+            <div class = "entry">Jason Abounader</div>
+            <div class = "entry">Jason Abounader</div>
+        </div>
+
+    </div>
 </body>
     
 </html>

@@ -1,0 +1,11 @@
+#box {
+    width: 80%;
+}
+
+
+#top-bar {
+    width: 100%;
+    background-color: white;
+    margin: 2vh 2vw 2vh 2vw;
+    font-size: 24px;
+}
