@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script defer src="/static/js/index.js"></script>
+    <script defer src="/static/js/managers.js"></script>
 
     <link href="/static/css/global.css" rel ="stylesheet">
     <link href="/static/css/managers.css" rel = "stylesheet">
@@ -15,28 +16,64 @@
 
 <body>
     <h1>Edit Managers</h1>
+
     <div id = "box" class = "flex column centered">
 
         <div id = "top-bar" class = "flex row"> 
+            <div class = "flex column">
+                <div> First Name </div>
+            </div>    
+            <div class = "flex column">
+                <div> Last Name </div> 
+            </div>        
+                
+            <div class = "flex column">
+                <div> User Name </div>
+            </div> 
+            <div class = "flex column">
+                <div> Action </div>
+            </div> 
+        
+        </div>
+
+        <div id = "entry-list" class = "flex row"> 
             <div id = "first-name-column" class = "flex column">
-                First Name
+                <div class = "entry"> Jason </div>
+                <div class = "entry"> Riley </div>
             </div>    
             <div id = "last-name-column" class = "flex column">
-                Last Name
+                <div class = "entry"> Abounader </div>
+                <div class = "entry"> Libens </div>
             </div>        
                 
             <div id = "username-column" class = "flex column">
-                User Name
+                <div class = "entry"> Jasonflame101 </div>
+                <div class = "entry"> Piegoob </div>
             </div> 
-            <button type="button" id = "add-entry">Add Manager</button> 
+            <div id = "action-column" class = "flex column">
+                <button type = "button" class = "delete-entry"> X </button>
+                <button type = "button" class = "delete-entry"> X </button>
+            </div> 
         
         </div>
-        <div id = "manager-entries">
-            <div class = "entry">Jason Abounader</div>
-            <div class = "entry">Jason Abounader</div>
-        </div>
-
+        
+        <button type="button" id = "add-entry">&nbsp+&nbsp</button> 
+        
     </div>
+
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Some text in the Modal..</p>
+          <input type="text" id="first-name" placeholder="First Name">
+          <input type="text" id="username" placeholder="Username">
+        </div>
+      
+    </div>
+
 </body>
     
 </html>

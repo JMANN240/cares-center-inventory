@@ -1,11 +1,111 @@
+body {
+    justify-content:  flex-start;
+    
+}
+
+h1 {
+    padding-top: 15vh;
+}
+
+h3 {
+    font-size: 14px;
+    
+}
+
+
 #box {
     width: 80%;
 }
 
 
 #top-bar {
+    
     width: 100%;
     background-color: white;
-    margin: 2vh 2vw 2vh 2vw;
+    margin: 2vh 2vw 0vh 2vw;
     font-size: 24px;
+    color: #101010;
+    justify-content: space-evenly;
+
+    border-bottom: .5vh solid;
+    border-color: navy;
+    
 }
+
+#entry-list {
+    width: 100%;
+    max-height: 60vh;
+    background-color: #101010;
+    margin: 0vh 2vw 0vh 2vw;
+    color: white;
+    justify-content: space-evenly;
+    
+    overflow-y:auto;
+    
+}
+
+.entry {
+    text-align: center;
+    
+    font-size: 12px;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    
+}
+
+.first-name-column {
+    border-right: 1vw solid;
+    border-left: 1vw solid;
+    border-color: white;
+}
+
+.column {
+    padding: 1vh 1vw 1vh 1vw; 
+    
+}
+
+
+button {
+    all: unset;
+    position: absolute;
+    
+    margin: 1vh;
+    padding: 1vh;
+    border-radius: 500px;
+    border: 0;
+    text-align: center;
+    font-weight: bold;
+    color: navy;
+    background-color: rgba(255, 255, 255, 1);
+    font-size: 5vh;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    animation: 2s ease-out 0s 1 fadeIn;
+
+    bottom: 20px;
+    right: 20px;
+}
+
+.delete-entry {
+    all: unset;
+    background-color: navy;
+    text-align: center;
+    width: 5vw;
+    font-size: 12px;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+
+    border: 0;
+    border-radius: 50px;
+}
+
+.modal {
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    
+    
+    display: none;
+    background-color: #101010;
+    backdrop-filter: blur(100px);
+}
+
