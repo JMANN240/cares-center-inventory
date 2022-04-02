@@ -2,8 +2,8 @@ body {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 40vw 30vw 30vw;
-    grid-template-rows: 50vh 35vh 15vh;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 90vh 10vh;
 }
 
 .donor-weight, .item {
@@ -44,14 +44,6 @@ button.small {
     border-radius: 1.5ch;
 }
 
-#camera {
-    background-color: black;
-    width: 100%;
-    height: 100%;
-    grid-area: 1 / 1 / 2 / 3;
-    outline: 1px solid black;
-}
-
 #reader {
     width: 100%;
 }
@@ -59,15 +51,20 @@ button.small {
 #items {
     width: 100%;
     height: 100%;
-    grid-area: 1 / 3 / 3 / 4;
+    grid-area: 1 / 3 / 2 / 4;
     
     overflow-y: scroll;
+}
+
+#reader-weights-buttons {
+    width: 100%;
+    height: 100%;
+    grid-area: 1 / 1 / 2 / 3;
 }
 
 #donor-weights {
     width: 100%;
     height: 100%;
-    grid-area: 2 / 2 / 3 / 3;
     outline: 1px solid black;
     overflow-y: scroll;
 }
@@ -75,30 +72,30 @@ button.small {
 #buttons {
     width: 100%;
     height: 100%;
-    grid-area: 2 / 1 / 3 / 2;
     outline: 1px solid black;
+    overflow-y: scroll;
 }
 
 #footer {
     width: 100%;
     height: 100%;
-    grid-area: 3 / 1 / 4 / 4;
+    grid-area: 2 / 1 / 3 / 4;
     outline: 1px solid black;
 }
 
-input[type="number"] {
+input[type="text"] {
     background-color: white;
     border-radius: 1ch;
     font-size: 3vw;
     border: 1px solid black;
+    color: navy;
+}
+
+input[type="text"]::placeholder {
     color: lightgray;
 }
 
-input[type="number"]::placeholder {
-    color: unset;
-}
-
-input[type="number"]:focus::placeholder {
+input[type="text"]:focus::placeholder {
     color: unset;
     text-shadow: unset;
 }
