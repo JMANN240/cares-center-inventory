@@ -24,6 +24,17 @@
     }
 }
 
+@keyframes badFlash {
+    from {
+        background-color: red;
+    }
+}
+
+.bad-flash {
+    animation-name: badFlash;
+    animation-duration: 1s;
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -109,8 +120,7 @@ a {
 input {
     margin: 1vh;
     padding: 1vh;
-    min-width: 3vh;
-    border-radius: 200px;
+    border-radius: 1ch;
     border: 0;
     background-color: rgba(255, 255, 255, 0.5);
     text-align: center;
@@ -136,8 +146,7 @@ input:focus::placeholder {
 button {
     margin: 1vh;
     padding: 1vh;
-    min-width: 40vw;
-    border-radius: 200px;
+    border-radius: 1ch;
     border: 0;
     text-align: center;
     font-weight: bold;
