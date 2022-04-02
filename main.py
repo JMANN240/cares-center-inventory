@@ -54,6 +54,7 @@ app.mount("/api", api)
 templates = Jinja2Templates(directory="templates")
 
 writerOptions = {
+    'module_width': 0.4,
     'text_distance': 1.0,
     'quiet_zone': 2.0,
     'background': '#ffffff',
