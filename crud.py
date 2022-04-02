@@ -238,6 +238,7 @@ def create_transaction_item(db: Session, transaction_item = schemas.TransactionI
     db.add(db_transaction_item)
     db.commit()
     db.refresh(db_transaction_item)
+    return db_transaction_item
 
 def get_transaction_items_by_transaction_id(db: Session, transaction_id: int):
     return db.query(models.TransactionItem).filter(models.TransactionItem.transaction_id == transaction_id).all()
@@ -253,11 +254,12 @@ def create_donor_weight(db: Session, donor_weight:schemas.DonorWeightCreate):
     db_donor_weight = models.DonorWeight(
         donor_id = donor_weight.donor_id,
         transaction_id = donor_weight.transaction_id,
-        weight = donor_weight.donor_id
+        weight = donor_weight.weight
     )
     db.add(db_donor_weight)
     db.commit()
     db.refresh(db_donor_weight)
+    return db_donor_weight
 
 def get_donor_weights_by_transaction_id(db: Session, transaction_id: int):
     return db.query(models.DonorWeight).filter(models.DonorWeight.transaction_id == transaction_id).all()
