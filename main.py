@@ -1,5 +1,4 @@
 from io import BytesIO
-from sqlite3 import dbapi2
 from xmlrpc.client import ResponseError
 from fastapi import FastAPI, Request, Depends, Cookie
 from fastapi.staticfiles import StaticFiles
