@@ -1,4 +1,5 @@
 from io import BytesIO
+from sqlite3 import dbapi2
 from xmlrpc.client import ResponseError
 from fastapi import FastAPI, Request, Depends, Cookie
 from fastapi.staticfiles import StaticFiles
@@ -159,4 +160,3 @@ async def get_barcode(barcode: schemas.Barcode):
     barcodeImage.write(barcodeFile, writerOptions)
     barcodeFile.seek(0)
     return StreamingResponse(barcodeFile, media_type='image/png')
-    

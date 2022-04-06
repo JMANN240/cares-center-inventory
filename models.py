@@ -17,8 +17,7 @@ class Item(Base):
     item_id = Column(Integer, primary_key=True)
     item_name = Column(String, nullable=False)
     item_points = Column(Integer, nullable=False)
-    item_front_quantity = Column(Integer, nullable=False, default=0)
-    item_back_quantity = Column(Integer, nullable=False, default=0)
+    item_quantity = Column(Integer, nullable=False, default=0)
     item_barcode = Column(String, nullable=False)
     donor_id = Column(Integer, ForeignKey("donor.donor_id"))
 
@@ -47,7 +46,7 @@ class Replenishment(Base):
     to_replenishment_item = relationship("ReplenishmentItem", back_populates="to_replenishment")
 
 class ReplenishmentItem(Base):
-    __tablename__ = "replenishment_items"
+    __tablename__ = "replenishment_item"
 
     item_id = Column(Integer, ForeignKey("item.item_id"), primary_key=True)
     replenish_id = Column(Integer, ForeignKey("replenishment.replenish_id"), primary_key=True)
