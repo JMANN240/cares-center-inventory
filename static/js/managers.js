@@ -1,25 +1,31 @@
-// Get the modal
+//NEED TO DYNAMICALLY ADD ENTRIES TO LIST
 var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("add-entry");
+var box = document.getElementById("box");
+var addBtn = document.getElementById("add-entry");
+var submitBtn = document.getElementById("submit");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var close = document.getElementById("close");
 
 // When the user clicks on the button, open the modal
-btn.onclick = function() {
+addBtn.onclick = function() {
+  box.style.display = "none";
   modal.style.display = "block";
+  addBtn.style.opacity = 0;
+  
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+//close the modal
+close.onclick = function() {
   modal.style.display = "none";
+  box.style.display = "flex";
+  addBtn.style.opacity = 100;
 }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+submit.onclick = function() {
+  //NEED TO COLLECT INFO FROM HERE
+  modal.style.display = "none";
+  box.style.display = "flex";
+  addBtn.style.opacity = 100;
 }
+

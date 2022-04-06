@@ -12,9 +12,16 @@ h3 {
     
 }
 
+input {
+    margin: 1vh;
+    padding: unset;
+    min-width: unset;
+}
+
 
 #box {
     width: 80%;
+    display:flex;
 }
 
 
@@ -64,8 +71,7 @@ h3 {
     
 }
 
-
-button {
+#add-entry {
     all: unset;
     position: absolute;
     
@@ -85,6 +91,23 @@ button {
     right: 20px;
 }
 
+#close {
+    all: unset;
+    max-width: 10vw;
+    margin: 1vh;
+    padding: 1vh;
+    border-radius: 500px;
+    border: 0;
+    text-align: center;
+    font-weight: bold;
+    color: navy;
+    background-color: rgba(255, 255, 255, 1);
+    font-size: 5vh;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    animation: 2s ease-out 0s 1 fadeIn;
+
+}
+
 .delete-entry {
     all: unset;
     background-color: navy;
@@ -99,13 +122,11 @@ button {
 }
 
 .modal {
-    position: absolute;
-    left: 25%;
-    top: 25%;
-    
-    
+    color: white;
+    text-align: center;
+    font-size: 24px;
     display: none;
     background-color: #101010;
-    backdrop-filter: blur(100px);
+    
 }
 
