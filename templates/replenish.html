@@ -14,11 +14,22 @@
 	<body>
 	<h3>Cares Inventory</h3>
 	<h3>Management Page</h3>
-	<input type="text" placeholder="Name">
-	<input type="text" placeholder="Donor">
-	<input type="text" placeholder="Weight">
-	<input type="text" placeholder="Points">
-    <button type="button">search</button>
+	<div class="flex row">
+	<button type="button">Search</button>
+	<button type="button">Add Item</button>
+	</div>
+	<div class="flex row">
+	<div><input type="text" placeholder="Name"></div>
+	<div><input type="text" placeholder="Donor"></div>
+	<div><input type="text" placeholder="Weight"></div>
+	<div><input type="text" placeholder="Points"></div>
+	</div>
+	<div class="flex row">
+		<div id = "Columns" class = "flex column"> <h4>NAME</h4> </div>
+		<div id = "Columns" class = "flex column"> <h4>DONOR</h4> </div>
+		<div id = "Columns" class = "flex column"> <h4>WEIGHT</h4> </div>
+		<div id = "Columns" class = "flex column"> <h4>POINTS</h4> </div>
+	</div>
 	</body>
     
 </html>
