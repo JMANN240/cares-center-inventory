@@ -35,8 +35,7 @@ class Donor(DonorBase):
 class ItemBase(BaseModel):
     item_name: str
     item_points: int
-    item_front_quantity: int = 0
-    item_back_quantity: int = 0
+    item_quantity: int = 0
     donor_id: int
 
 class ItemCreate(ItemBase):

@@ -159,4 +159,3 @@ async def get_barcode(barcode: schemas.Barcode):
     barcodeImage.write(barcodeFile, writerOptions)
     barcodeFile.seek(0)
     return StreamingResponse(barcodeFile, media_type='image/png')
-    

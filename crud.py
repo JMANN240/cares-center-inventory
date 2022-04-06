@@ -68,8 +68,7 @@ def create_item(db: Session, item: schemas.ItemCreate):
     db_item = models.Item(
         item_name = item.item_name,
         item_points = item.item_points,
-        item_front_quantity = item.item_front_quantity,
-        item_back_quantity = item.item_back_quantity,
+        item_quantity = item.item_quantity,
         donor_id = item.donor_id,
         item_barcode = new_barcode
     )
@@ -100,12 +99,8 @@ def update_item_name_by_item_id(db: Session, item_id: int, new_item_name: str):
     db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_name: new_item_name})
     db.commit()
 
-def update_item_front_quantity_by_item_id(db: Session, item_id: int, new_item_front_quantity):
-    db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_front_quantity: new_item_front_quantity})
-    db.commit()
-
-def update_item_back_quantity_by_item_id(db: Session, item_id: int, new_item_back_quantity):
-    db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_back_quantity: new_item_back_quantity})
+def update_item_quantity_by_item_id(db: Session, item_id: int, new_item_quantity):
+    db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_quantity: new_item_quantity})
     db.commit()
 
 def delete_item_by_item_id(db: Session, item_id: int):
