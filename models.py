@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, UniqueConstraint
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean, UniqueConstraint
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -32,6 +32,8 @@ class Manager(Base):
     manager_firstname = Column(String, nullable=False)
     manager_lastname = Column(String, nullable=False)
     passhash = Column(String, nullable=False)
+    is_active = Column(Boolean, nullable=False, default=True)
+    is_admin = Column(Boolean, nullable=False)
     
     UniqueConstraint('manager_firstname', 'manager_lastname', name='unique_manager_name')
 
