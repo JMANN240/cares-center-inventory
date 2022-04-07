@@ -8,28 +8,42 @@ import time
 # manager
 def create_manager(db: Session, manager: schemas.ManagerCreate):
     db_manager = models.Manager(
-        manager_name = manager.manager_name,
-        passhash = pbkdf2_sha256.hash(manager.password)
+        manager_firstname = manager.manager_firstname,
+        manager_lastname = manager.manager_lastname,
+        manager_username = manager.manager_username,
+        passhash = pbkdf2_sha256.hash(manager.password),
+        is_admin = manager.is_admin
     )
     db.add(db_manager)
     db.commit()
     db.refresh(db_manager)
     return db_manager
 
-def get_manager_by_manager_name(db: Session, manager_name: str):
-    db_manager = db.query(models.Manager).filter(models.Manager.manager_name == manager_name).one()
+def get_manager_by_manager_username(db: Session, manager_username: str):
+    db_manager = db.query(models.Manager).filter(models.Manager.manager_username == manager_username).one()
     return db_manager
 
-def update_manager_name_by_manager_id(db: Session, manager_id: int, new_manager_name: str):
-    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_name: new_manager_name})
+def update_manager_username_by_manager_id(db: Session, manager_id: int, new_manager_username: str):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_username: new_manager_username})
     db.commit()
 
 def get_managers(db: Session):
     return db.query(models.Manager).all()
 
-def delete_manager_by_manager_id(db: Session, manager_id: int):
-    manager_to_delete = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).one()
-    db.delete(manager_to_delete)
+def promote_manager_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: True})
+    db.commit()
+
+def demote_manager_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: False})
+    db.commit()
+
+def activate_manager_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_active: True})
+    db.commit()
+
+def deactivate_manager_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_active: False})
     db.commit()
 
 # donor
