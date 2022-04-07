@@ -30,7 +30,8 @@ with SessionLocal() as db:
             schemas.ManagerCreate(
                 manager_firstname="fn",
                 manager_lastname="ln",
-                password="test"
+                password="test",
+                is_admin=True
             )
         )
 
@@ -113,7 +114,7 @@ def register_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_d
 @api.post("/manager/login", response_model=bool)
 def manager_login(login: schemas.Login, response: Response, db: Session = Depends(get_db)):
     try:
-        if len(login.username.split(' ')) == 2:
+        if len(login.username.split(' ')) == 2: # check if the username can just be splited into to 2 substrings
             db_manager = crud.get_manager_by_manager_name(db, manager_firstname=login.username.split(' ')[0], manager_lastname=login.username.split(' ')[1])
         is_password_correct = pbkdf2_sha256.verify(login.password, db_manager.passhash)
     
