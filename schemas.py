@@ -3,7 +3,8 @@ from typing import Optional
 
 # Manager
 class ManagerBase(BaseModel):
-    manager_name: str
+    manager_firstname: str
+    manager_lastname: str
 
 class ManagerCreate(ManagerBase):
     password: str # When creating a manager it takes the actual password to hash and then store

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, UniqueConstraint
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -29,8 +29,11 @@ class Manager(Base):
     __tablename__ = "manager"
 
     manager_id = Column(Integer, primary_key=True)
-    manager_name = Column(String, unique=True, nullable=False)
+    manager_firstname = Column(String, nullable=False)
+    manager_lastname = Column(String, nullable=False)
     passhash = Column(String, nullable=False)
+    
+    UniqueConstraint('manager_firstname', 'manager_lastname', name='unique_manager_name')
 
     to_replenishment = relationship("Replenishment", back_populates="to_manager")
     to_transaction = relationship("Transaction", back_populates="to_manager")

@@ -1,5 +1,4 @@
 from io import BytesIO
-from sqlite3 import dbapi2
 from xmlrpc.client import ResponseError
 from fastapi import FastAPI, Request, Depends, Cookie
 from fastapi.staticfiles import StaticFiles
@@ -24,12 +23,13 @@ models.Base.metadata.create_all(bind=engine)
 
 with SessionLocal() as db:
     try:
-        crud.get_manager_by_manager_name(db, "admin")
+        crud.get_manager_by_manager_name(db, "fn", "ln")
     except sqlalchemy.orm.exc.NoResultFound:
         crud.create_manager(
             db, 
             schemas.ManagerCreate(
-                manager_name="admin", 
+                manager_firstname="fn",
+                manager_lastname="ln",
                 password="test"
             )
         )
@@ -113,7 +113,7 @@ def register_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_d
 @api.post("/manager/login", response_model=bool)
 def manager_login(login: schemas.Login, response: Response, db: Session = Depends(get_db)):
     try:
-        db_manager = crud.get_manager_by_manager_name(db, manager_name=login.username)
+        db_manager = crud.get_manager_by_manager_name(db, manager_firstname=login.username.split(' ')[0], manager_lastname=login.username.split(' ')[1])
         is_password_correct = pbkdf2_sha256.verify(login.password, db_manager.passhash)
     
         if is_password_correct:

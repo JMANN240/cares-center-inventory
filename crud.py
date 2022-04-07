@@ -8,7 +8,8 @@ import time
 # manager
 def create_manager(db: Session, manager: schemas.ManagerCreate):
     db_manager = models.Manager(
-        manager_name = manager.manager_name,
+        manager_firstname = manager.manager_firstname,
+        manager_lastname = manager.manager_lastname,
         passhash = pbkdf2_sha256.hash(manager.password)
     )
     db.add(db_manager)
@@ -16,12 +17,12 @@ def create_manager(db: Session, manager: schemas.ManagerCreate):
     db.refresh(db_manager)
     return db_manager
 
-def get_manager_by_manager_name(db: Session, manager_name: str):
-    db_manager = db.query(models.Manager).filter(models.Manager.manager_name == manager_name).one()
+def get_manager_by_manager_name(db: Session, manager_firstname: str, manager_lastname: str):
+    db_manager = db.query(models.Manager).filter(and_(models.Manager.manager_firstname == manager_firstname, models.Manager.manager_lastname == manager_lastname)).one()
     return db_manager
 
-def update_manager_name_by_manager_id(db: Session, manager_id: int, new_manager_name: str):
-    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_name: new_manager_name})
+def update_manager_name_by_manager_id(db: Session, manager_id: int, new_manager_firstname: str, new_manager_lastname: str):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_firstname: new_manager_firstname, models.Manager.manager_lastname: new_manager_lastname})
     db.commit()
 
 def get_managers(db: Session):
