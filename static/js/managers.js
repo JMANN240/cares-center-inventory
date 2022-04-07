@@ -6,7 +6,17 @@ getManagers = async () => {
     let firstNameColumn = document.getElementById("first-name-column")
     let lastNameColumn = document.getElementById("last-name-column")
     let usernameColumn = document.getElementById("username-column")
-
+    // clear columns, in case there's leftover content
+    while (firstNameColumn.firstChild) {
+        firstNameColumn.removeChild(firstNameColumn.firstChild)
+    }
+    while (lastNameColumn.firstChild) {
+        lastNameColumn.removeChild(lastNameColumn.firstChild)
+    }
+    while (usernameColumn.firstChild) {
+        usernameColumn.removeChild(usernameColumn.firstChild)
+    }
+    // populate columns
     for (const manager of managers) {
         let username = document.createElement("div")
         username.classList.add("entry")
@@ -39,10 +49,27 @@ close.onclick = function () {
 }
 
 // add manager
-submit.onclick = function () {
+submit.onclick = async () => {
     modal.style.display = "none";
     box.style.display = "flex";
     addBtn.style.opacity = 100;
+    // add a new manager
+    let username = document.getElementById("username").value
+    let password = document.getElementById("password").value
+
+    console.log(username)
+    console.log(password)
+
+    let res = await fetch("/api/manager/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            manager_name: username,
+            password: password
+        })
+    })
     // update manager list
     getManagers()
 }
