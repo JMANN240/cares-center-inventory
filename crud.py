@@ -18,11 +18,11 @@ def create_manager(db: Session, manager: schemas.ManagerCreate):
     db.refresh(db_manager)
     return db_manager
 
-def get_manager_by_manager_name(db: Session, manager_firstname: str, manager_lastname: str):
-    db_manager = db.query(models.Manager).filter(and_(models.Manager.manager_firstname == manager_firstname, models.Manager.manager_lastname == manager_lastname)).one()
+def get_manager_by_manager_name(db: Session, manager_username: str):
+    db_manager = db.query(models.Manager).filter(models.Manager.manager_firstname == manager_username).one()
     return db_manager
 
-def update_manager_name_by_manager_id(db: Session, manager_id: int, new_manager_firstname: str, new_manager_lastname: str):
+def update_manager_firstname_and_lastname_by_manager_id(db: Session, manager_id: int, new_manager_firstname: str, new_manager_lastname: str):
     db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_firstname: new_manager_firstname, models.Manager.manager_lastname: new_manager_lastname})
     db.commit()
 
