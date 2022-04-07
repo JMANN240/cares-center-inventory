@@ -10,6 +10,7 @@ def create_manager(db: Session, manager: schemas.ManagerCreate):
     db_manager = models.Manager(
         manager_firstname = manager.manager_firstname,
         manager_lastname = manager.manager_lastname,
+        manager_username = manager.manager_username,
         passhash = pbkdf2_sha256.hash(manager.password),
         is_admin = manager.is_admin
     )
@@ -19,7 +20,7 @@ def create_manager(db: Session, manager: schemas.ManagerCreate):
     return db_manager
 
 def get_manager_by_manager_username(db: Session, manager_username: str):
-    db_manager = db.query(models.Manager).filter(models.Manager.manager_firstname == manager_username).one()
+    db_manager = db.query(models.Manager).filter(models.Manager.manager_username == manager_username).one()
     return db_manager
 
 def update_manager_username_by_manager_id(db: Session, manager_id: int, new_manager_username: str):
