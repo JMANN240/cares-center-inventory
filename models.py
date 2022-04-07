@@ -31,6 +31,7 @@ class Manager(Base):
     manager_id = Column(Integer, primary_key=True)
     manager_firstname = Column(String, nullable=False)
     manager_lastname = Column(String, nullable=False)
+    manager_username = Column(String, nullable=False, unique=True)
     passhash = Column(String, nullable=False)
     is_active = Column(Boolean, nullable=False, default=True)
     is_admin = Column(Boolean, nullable=False)
