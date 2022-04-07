@@ -18,7 +18,7 @@ def create_manager(db: Session, manager: schemas.ManagerCreate):
     db.refresh(db_manager)
     return db_manager
 
-def get_manager_by_manager_name(db: Session, manager_username: str):
+def get_manager_by_manager_username(db: Session, manager_username: str):
     db_manager = db.query(models.Manager).filter(models.Manager.manager_firstname == manager_username).one()
     return db_manager
 
