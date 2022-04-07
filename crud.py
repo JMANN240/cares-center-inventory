@@ -10,7 +10,8 @@ def create_manager(db: Session, manager: schemas.ManagerCreate):
     db_manager = models.Manager(
         manager_firstname = manager.manager_firstname,
         manager_lastname = manager.manager_lastname,
-        passhash = pbkdf2_sha256.hash(manager.password)
+        passhash = pbkdf2_sha256.hash(manager.password),
+        is_admin = manager.is_admin
     )
     db.add(db_manager)
     db.commit()
@@ -28,9 +29,20 @@ def update_manager_name_by_manager_id(db: Session, manager_id: int, new_manager_
 def get_managers(db: Session):
     return db.query(models.Manager).all()
 
-def delete_manager_by_manager_id(db: Session, manager_id: int):
-    manager_to_delete = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).one()
-    db.delete(manager_to_delete)
+def make_manager_admin_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: True})
+    db.commit()
+
+def make_manager_not_admin_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: False})
+    db.commit()
+
+def activate_manager_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_active: True})
+    db.commit()
+
+def deactivate_manager_by_manager_id(db: Session, manager_id: int):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_active: False})
     db.commit()
 
 # donor
