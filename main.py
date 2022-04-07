@@ -116,7 +116,7 @@ def manager_login(login: schemas.Login, response: Response, db: Session = Depend
         is_password_correct = pbkdf2_sha256.verify(login.password, db_manager.passhash)
     
         if is_password_correct:
-            response.set_cookie(key="user_id", value=db_manager.manager_id)
+            response.set_cookie(key="user_id", value=db_manager.manager_id, max_age=60*60*6)
             response.status_code = 200
             return response
         else:
