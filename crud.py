@@ -29,11 +29,11 @@ def update_manager_name_by_manager_id(db: Session, manager_id: int, new_manager_
 def get_managers(db: Session):
     return db.query(models.Manager).all()
 
-def make_manager_admin_by_manager_id(db: Session, manager_id: int):
+def promote_manager_by_manager_id(db: Session, manager_id: int):
     db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: True})
     db.commit()
 
-def make_manager_not_admin_by_manager_id(db: Session, manager_id: int):
+def demote_manager_by_manager_id(db: Session, manager_id: int):
     db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: False})
     db.commit()
 
