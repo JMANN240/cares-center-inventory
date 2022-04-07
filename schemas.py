@@ -8,13 +8,13 @@ class ManagerBase(BaseModel):
 
 class ManagerCreate(ManagerBase):
     password: str # When creating a manager it takes the actual password to hash and then store
-
-class ManagerDelete(ManagerBase):
-    pass
+    is_admin: bool
 
 class Manager(ManagerBase):
     manager_id: int
     passhash: str # But when returning a manager it returns the stored hash
+    is_active: bool
+    is_admin: bool
 
     class Config:
         orm_mode = True
