@@ -23,13 +23,14 @@ models.Base.metadata.create_all(bind=engine)
 
 with SessionLocal() as db:
     try:
-        crud.get_manager_by_manager_name(db, "fn", "ln")
+        crud.get_manager_by_manager_username(db, "admin")
     except sqlalchemy.orm.exc.NoResultFound:
         crud.create_manager(
             db, 
             schemas.ManagerCreate(
                 manager_firstname="fn",
                 manager_lastname="ln",
+                manager_username="admin",
                 password="test",
                 is_admin=True
             )
@@ -114,8 +115,7 @@ def register_manager(manager: schemas.ManagerCreate, db: Session = Depends(get_d
 @api.post("/manager/login", response_model=bool)
 def manager_login(login: schemas.Login, response: Response, db: Session = Depends(get_db)):
     try:
-        if len(login.username.split(' ')) == 2: # check if the username can be splited into to exactly 2 substrings
-            db_manager = crud.get_manager_by_manager_name(db, manager_firstname=login.username.split(' ')[0], manager_lastname=login.username.split(' ')[1])
+        db_manager = crud.get_manager_by_manager_username(db, manager_username=login.username)
         is_password_correct = pbkdf2_sha256.verify(login.password, db_manager.passhash)
     
         if is_password_correct:
