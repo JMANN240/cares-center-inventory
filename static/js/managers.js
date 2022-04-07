@@ -1,7 +1,6 @@
 getManagers = async () => {
     // list of managers
-    let managers_res = await fetch("/api/manager/read")
-    let managers = await managers_res.json()
+    let managers = await (await fetch("/api/manager/read")).json()
     // columns
     let firstNameColumn = document.getElementById("first-name-column")
     let lastNameColumn = document.getElementById("last-name-column")
