@@ -80,7 +80,10 @@ addSubmitBtn.onclick = async () => {
     let username = document.getElementById("add-username").value
     let password = document.getElementById("add-password").value
 
-    // TODO: make sure none of the fields are empty.
+    if (firstName == "" || lastName == "" || username == "" || password == "") {
+        // TODO: display red error text! some fields were left blank!!!
+        return
+    }
 
     let res = await fetch("/api/manager/register", {
         method: "POST",
@@ -105,7 +108,10 @@ deactivateSubmitBtn.onclick = async () => {
 
     let username = document.getElementById("deactivate-username").value
 
-    // TODO: verify that it's not empty.
+    if (username == "") {
+        // TODO: display red error text! field was left blank!!!
+        return
+    }
 
     // we need more API routes before we can deactivate.
     //let res = await fetch("/api/manager")
