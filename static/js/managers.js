@@ -24,14 +24,15 @@ getManagers = async () => {
     }
 }
 
-// add manager modal
 var box = document.getElementById("box");
 
+// add manager nodes
 var addModal = document.getElementById("add-modal");
 var addBtn = document.getElementById("add-entry");
 var addSubmitBtn = document.getElementById("add-submit");
 var addClose = document.getElementById("add-close");
 
+// deactivate manager nodes
 var deactivateModal = document.getElementById("deactivate-modal");
 var deactivateBtn = document.getElementById("deactivate-entry");
 var deactivateSubmitBtn = document.getElementById("deactivate-submit");
