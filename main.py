@@ -54,8 +54,9 @@ app.mount("/api", api)
 templates = Jinja2Templates(directory="templates")
 
 writerOptions = {
-    'module_width': 0.4,
-    'text_distance': 1.0,
+    'module_width': 0.8,
+    'module_height': 32,
+    'text_distance': 2.0,
     'quiet_zone': 2.0,
     'background': '#ffffff',
     'foreground': '#000000',
@@ -103,9 +104,15 @@ async def transaction(request: Request):
 async def search(request: Request):
     return templates.TemplateResponse("search.html", {"request": request})
 
-@app.get("/barcode")
-async def barcode(request: Request):
-    return templates.TemplateResponse("barcode.html", {"request": request})
+@app.get("/scan")
+@check_auth
+async def scan(request: Request):
+    return templates.TemplateResponse("scan.html", {"request": request})
+
+@app.get("/barcode", status_code=200)
+def barcode(request: Request, db: Session = Depends(get_db)):
+    item = crud.get_item_by_item_barcode(db, request.query_params['data'])
+    return templates.TemplateResponse("barcode.html", {"request": request, "item": item})
 
 @app.get("/managers")
 @check_auth
@@ -181,12 +188,14 @@ def create_transaction(transaction: schemas.TransactionCreate, db: Session = Dep
 
 @api.post("/transaction/item", response_model=schemas.TransactionItem)
 def create_transaction_item(transaction_item: schemas.TransactionItemCreate, db: Session = Depends(get_db)):
+    crud.update_item_quantity_by_item_id_relative(db, transaction_item.item_id, -transaction_item.transaction_quantity)
     return crud.create_transaction_item(db, transaction_item)
 
 @api.post("/transaction/items", response_model=List[schemas.TransactionItem])
 def create_transaction_item(transaction_items: List[schemas.TransactionItemCreate], db: Session = Depends(get_db)):
     items = []
     for transaction_item in transaction_items:
+        crud.update_item_quantity_by_item_id_relative(db, transaction_item.item_id, -transaction_item.transaction_quantity)
         db_item = crud.create_transaction_item(db, transaction_item)
         items.append(db_item)
     return items
@@ -224,7 +233,7 @@ def create_replenishment_item(replenishment_items: List[schemas.ReplenishmentIte
     return items
 
 @api.get("/barcode", status_code=200)
-async def get_barcode(data: str):
+async def get_barcode_image(data: str):
     barcodeImage = bc.get('ean8', data, writer=ImageWriter())
     barcodeFile = BytesIO()
     barcodeImage.write(barcodeFile, writerOptions)
