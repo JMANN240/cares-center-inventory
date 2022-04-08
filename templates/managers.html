@@ -30,9 +30,6 @@
             <div class = "flex column">
                 <div> User Name </div>
             </div> 
-            <div class = "flex column">
-                <div> Action </div>
-            </div> 
         
         </div>
 
@@ -46,9 +43,6 @@
             <div id = "username-column" class = "flex column">
 
             </div> 
-            <div id = "action-column" class = "flex column">
-
-            </div> 
         
         </div>
         
@@ -57,18 +51,26 @@
     </div>
 
     <button type="button" id = "add-entry">&nbsp+&nbsp</button> 
+    <button type="button" id = "delete-entry">&nbspx&nbsp</button> 
 
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content flex column">
-          <button type="button" id="close">&nbspx&nbsp</button>
+    <div id="add-modal" class="modal">
+        <div class="flex column">
+          <button type="button" id="close-add">&nbspx&nbsp</button>
           <h2>Add new manager</h2>
           <input type="text" id="first-name" placeholder="First Name">
           <input type="text" id="last-name" placeholder="Last Name">
           <input type="text" id="username" placeholder="Username">
           <input type="password" id="password" placeholder="Password">
           <button type="button" id="submit">Submit</button>
+        </div>
+      
+    </div>
+    <div id="delete-modal" class="modal">
+        <div class="flex column">
+          <button type="button" id="close-delete">&nbspx&nbsp</button>
+          <h2>Remove a manager</h2>
+          <input type="text" id="user-name" placeholder="Username">
+          <button type="button" id="confirm">Confirm</button>
         </div>
       
     </div>

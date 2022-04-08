@@ -25,33 +25,53 @@ getManagers = async () => {
 }
 
 // add manager modal
-var modal = document.getElementById("myModal");
+var addModal = document.getElementById("add-modal");
+var deleteModal = document.getElementById("delete-modal");
 var box = document.getElementById("box");
 var addBtn = document.getElementById("add-entry");
+var deleteBtn = document.getElementById("delete-entry");
 var submitBtn = document.getElementById("submit");
-
-// get the <span> element that closes the modal
-var close = document.getElementById("close");
+var confirmBtn = document.getElementById("confirm");
+var closeAdd = document.getElementById("close-add");
+var closeDelete = document.getElementById("close-delete");
 
 // when the user clicks on the add manager button, open the modal
 addBtn.onclick = function () {
     box.style.display = "none";
-    modal.style.display = "block";
-    addBtn.style.opacity = 0;
+    addModal.style.display = "block";
+    addBtn.style.display = "none";
+    deleteBtn.style.display = "none";
+}
+
+deleteBtn.onclick = function () {
+    box.style.display = "none";
+    deleteModal.style.display = "block";
+    addBtn.style.display = "none";
+    deleteBtn.style.display = "none";
 }
 
 // close the modal
-close.onclick = function () {
-    modal.style.display = "none";
+closeAdd.onclick = function () {
+    addModal.style.display = "none";
     box.style.display = "flex";
-    addBtn.style.opacity = 100;
+    addBtn.style.display = "inline-block";
+    deleteBtn.style.display = "inline-block";
 }
+
+closeDelete.onclick = function () {
+    deleteModal.style.display = "none";
+    box.style.display = "flex";
+    addBtn.style.display = "inline-block";
+    deleteBtn.style.display = "inline-block";
+}
+
 
 // add manager
 submit.onclick = async () => {
-    modal.style.display = "none";
+    addModal.style.display = "none";
     box.style.display = "flex";
-    addBtn.style.opacity = 100;
+    addBtn.style.display = "inline-block";
+    deleteBtn.style.display = "inline-block";
     // add a new manager
     let username = document.getElementById("username").value
     let password = document.getElementById("password").value
@@ -71,4 +91,13 @@ submit.onclick = async () => {
     })
     // update manager list
     getManagers()
+}
+
+confirmBtn.onclick = function () {
+    //need to capture input here Ty
+    deleteModal.style.display = "none";
+    box.style.display = "flex";
+    addBtn.style.display = "inline-block";
+    deleteBtn.style.display = "inline-block";
+
 }
