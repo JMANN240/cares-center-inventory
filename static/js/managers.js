@@ -25,59 +25,61 @@ getManagers = async () => {
 }
 
 // add manager modal
-var addModal = document.getElementById("add-modal");
-var deleteModal = document.getElementById("delete-modal");
 var box = document.getElementById("box");
+
+var addModal = document.getElementById("add-modal");
 var addBtn = document.getElementById("add-entry");
-var deleteBtn = document.getElementById("delete-entry");
-var submitBtn = document.getElementById("submit");
-var confirmBtn = document.getElementById("confirm");
-var closeAdd = document.getElementById("close-add");
-var closeDelete = document.getElementById("close-delete");
+var addSubmitBtn = document.getElementById("add-submit");
+var addClose = document.getElementById("add-close");
+
+var deactivateModal = document.getElementById("deactivate-modal");
+var deactivateBtn = document.getElementById("deactivate-entry");
+var deactivateSubmitBtn = document.getElementById("deactivate-submit");
+var deactivateClose = document.getElementById("deactivate-close");
 
 // when the user clicks on the add manager button, open the modal
 addBtn.onclick = function () {
     box.style.display = "none";
     addModal.style.display = "block";
     addBtn.style.display = "none";
-    deleteBtn.style.display = "none";
+    deactivateBtn.style.display = "none";
 }
 
-deleteBtn.onclick = function () {
+deactivateBtn.onclick = function () {
     box.style.display = "none";
-    deleteModal.style.display = "block";
+    deactivateModal.style.display = "block";
     addBtn.style.display = "none";
-    deleteBtn.style.display = "none";
+    deactivateBtn.style.display = "none";
 }
 
 // close the modal
-closeAdd.onclick = function () {
+addClose.onclick = function () {
     addModal.style.display = "none";
     box.style.display = "flex";
     addBtn.style.display = "inline-block";
-    deleteBtn.style.display = "inline-block";
+    deactivateBtn.style.display = "inline-block";
 }
 
-closeDelete.onclick = function () {
-    deleteModal.style.display = "none";
+deactivateClose.onclick = function () {
+    deactivateModal.style.display = "none";
     box.style.display = "flex";
     addBtn.style.display = "inline-block";
-    deleteBtn.style.display = "inline-block";
+    deactivateBtn.style.display = "inline-block";
 }
-
 
 // add manager
-submit.onclick = async () => {
+addSubmitBtn.onclick = async () => {
     addModal.style.display = "none";
     box.style.display = "flex";
     addBtn.style.display = "inline-block";
-    deleteBtn.style.display = "inline-block";
+    deactivateBtn.style.display = "inline-block";
     // add a new manager
-    let username = document.getElementById("username").value
-    let password = document.getElementById("password").value
+    let firstName = document.getElementById("add-first-name").value
+    let lastName = document.getElementById("add-last-name").value
+    let username = document.getElementById("add-username").value
+    let password = document.getElementById("add-password").value
 
-    console.log(username)
-    console.log(password)
+    // TODO: make sure none of the fields are empty.
 
     let res = await fetch("/api/manager/register", {
         method: "POST",
@@ -93,11 +95,17 @@ submit.onclick = async () => {
     getManagers()
 }
 
-confirmBtn.onclick = function () {
-    //need to capture input here Ty
-    deleteModal.style.display = "none";
+// deactivate manager
+deactivateSubmitBtn.onclick = async () => {
+    deactivateModal.style.display = "none";
     box.style.display = "flex";
     addBtn.style.display = "inline-block";
-    deleteBtn.style.display = "inline-block";
+    deactivateBtn.style.display = "inline-block";
 
+    let username = document.getElementById("deactivate-username").value
+
+    // TODO: verify that it's not empty.
+
+    // we need more API routes before we can deactivate.
+    //let res = await fetch("/api/manager")
 }
