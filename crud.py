@@ -120,6 +120,10 @@ def update_item_quantity_by_item_id(db: Session, item_id: int, new_item_quantity
     db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_quantity: new_item_quantity})
     db.commit()
 
+def update_item_quantity_by_item_id_relative(db: Session, item_id: int, item_quantity_delta: float):
+    db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_quantity: models.Item.item_quantity + item_quantity_delta})
+    db.commit()
+
 def delete_item_by_item_id(db: Session, item_id: int):
     item_to_delete = db.query(models.Item).filter(models.Item.item_id == item_id).one()
     db.delete(item_to_delete)
