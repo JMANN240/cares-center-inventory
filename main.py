@@ -121,6 +121,13 @@ async def managers(request: Request):
 
 
 
+@app.get("/managers")
+@check_auth
+async def managers(request: Request):
+    return templates.TemplateResponse("managers.html", {"request": request})
+
+
+
 # Back-end
 
 @api.post("/manager/register", response_model=schemas.Manager)
