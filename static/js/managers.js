@@ -91,7 +91,9 @@ addSubmitBtn.onclick = async () => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            manager_name: username,
+            manager_firstname: firstName,
+            manager_lastname: lastName,
+            manager_username: username,
             password: password
         })
     })
