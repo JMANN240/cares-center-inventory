@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean, UniqueConstraint
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -17,8 +17,7 @@ class Item(Base):
     item_id = Column(Integer, primary_key=True)
     item_name = Column(String, nullable=False)
     item_points = Column(Integer, nullable=False)
-    item_front_quantity = Column(Integer, nullable=False, default=0)
-    item_back_quantity = Column(Integer, nullable=False, default=0)
+    item_quantity = Column(Integer, nullable=False, default=0)
     item_barcode = Column(String, nullable=False)
     donor_id = Column(Integer, ForeignKey("donor.donor_id"))
 
@@ -30,8 +29,14 @@ class Manager(Base):
     __tablename__ = "manager"
 
     manager_id = Column(Integer, primary_key=True)
-    manager_name = Column(String, unique=True, nullable=False)
+    manager_firstname = Column(String, nullable=False)
+    manager_lastname = Column(String, nullable=False)
+    manager_username = Column(String, nullable=False, unique=True)
     passhash = Column(String, nullable=False)
+    is_active = Column(Boolean, nullable=False, default=True)
+    is_admin = Column(Boolean, nullable=False)
+    
+    UniqueConstraint('manager_firstname', 'manager_lastname', name='unique_manager_name')
 
     to_replenishment = relationship("Replenishment", back_populates="to_manager")
     to_transaction = relationship("Transaction", back_populates="to_manager")
@@ -47,7 +52,7 @@ class Replenishment(Base):
     to_replenishment_item = relationship("ReplenishmentItem", back_populates="to_replenishment")
 
 class ReplenishmentItem(Base):
-    __tablename__ = "replenishment_items"
+    __tablename__ = "replenishment_item"
 
     item_id = Column(Integer, ForeignKey("item.item_id"), primary_key=True)
     replenish_id = Column(Integer, ForeignKey("replenishment.replenish_id"), primary_key=True)
