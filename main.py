@@ -47,6 +47,7 @@ def get_db():
 
 app = FastAPI()
 api = FastAPI()
+test = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/api", api)
@@ -185,7 +186,7 @@ def read_item_by_barcode(item_barcode: str, db: Session = Depends(get_db)):
 def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_item(db, item=item)
 
-@api.get("/transaction", response_class=List[schemas.Transaction])
+@api.get("/transaction", response_model=List[schemas.Transaction])
 def read_transactions(db: Session = Depends(get_db)):
     return crud.get_transactions(db)
 
@@ -219,7 +220,7 @@ def create_transaction_donor_weights(donor_weights: List[schemas.DonorWeightCrea
         weights.append(db_donor_weight)
     return weights
 
-@api.get("/replenishment", response_class=List[schemas.Replenishment])
+@api.get("/replenishment", response_model=List[schemas.Replenishment])
 def read_replenishments(db: Session = Depends(get_db)):
     return crud.get_replenishment(db)
 
