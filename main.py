@@ -100,6 +100,11 @@ async def replenish(request: Request):
 async def transaction(request: Request):
     return templates.TemplateResponse("transaction.html", {"request": request})
 
+@app.get("/records")
+@check_auth
+async def records(request: Request):
+    return templates.TemplateResponse("records.html", {"request": request})
+
 @app.get("/search")
 @check_auth
 async def search(request: Request):
@@ -162,6 +167,10 @@ def manager_logout(response: Response):
 def read_managers(db: Session = Depends(get_db)):
     return crud.get_managers(db)
 
+@api.get("/manager/read/{manager_id}", response_model=schemas.Manager)
+def read_manager_by_id(manager_id: int, db: Session = Depends(get_db)):
+    return crud.get_manager_by_manager_id(db, manager_id)
+
 @api.get("/donor", response_model=List[schemas.Donor])
 def read_donors(db: Session = Depends(get_db)):
     return crud.get_donors(db)
@@ -178,7 +187,11 @@ def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
 def read_items(db: Session = Depends(get_db)):
     return crud.get_items(db)
 
-@api.get("/item/{item_barcode}", response_model=schemas.Item)
+@api.get("/item/{item_id}", response_model=schemas.Item)
+def read_items_by_id(item_id: int, db: Session = Depends(get_db)):
+    return crud.get_item_by_item_id(db, item_id)
+
+@api.get("/item/barcode/{item_barcode}", response_model=schemas.Item)
 def read_item_by_barcode(item_barcode: str, db: Session = Depends(get_db)):
     return crud.get_item_by_item_barcode(db, item_barcode)
 
@@ -194,6 +207,10 @@ def read_transactions(db: Session = Depends(get_db)):
 def create_transaction(transaction: schemas.TransactionCreate, db: Session = Depends(get_db)):
     return crud.create_transaction(db, transaction)
 
+@api.get("/transaction/items", response_model=List[schemas.TransactionItem])
+def get_transaction_items(transaction_id: int, db: Session = Depends(get_db)):
+    return crud.get_transaction_items_by_transaction_id(db, transaction_id)
+
 @api.post("/transaction/item", response_model=schemas.TransactionItem)
 def create_transaction_item(transaction_item: schemas.TransactionItemCreate, db: Session = Depends(get_db)):
     crud.update_item_quantity_by_item_id_relative(db, transaction_item.item_id, -transaction_item.transaction_quantity)
@@ -207,6 +224,10 @@ def create_transaction_item(transaction_items: List[schemas.TransactionItemCreat
         db_item = crud.create_transaction_item(db, transaction_item)
         items.append(db_item)
     return items
+
+@api.get("/transaction/weights", response_model=List[schemas.DonorWeight])
+def get_transaction_items(transaction_id: int, db: Session = Depends(get_db)):
+    return crud.get_donor_weights_by_transaction_id(db, transaction_id)
 
 @api.post("/transaction/weight", response_model=schemas.DonorWeight)
 def create_transaction_donor_weight(donor_weight: schemas.DonorWeightCreate, db: Session = Depends(get_db)):
