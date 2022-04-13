@@ -23,3 +23,8 @@ let getCookie = (cookie_name) => {
         return match[1];
     }
 }
+
+let timestampToFormatted = (timestamp) => {
+    const dt = new Date(timestamp*1000);
+    return `${dt.getHours()}:${dt.getMinutes().toString().padStart(2, '0')}:${dt.getSeconds().toString().padStart(2, '0')}, ${dt.getMonth()}/${dt.getDay()}/${dt.getFullYear()}`
+}
