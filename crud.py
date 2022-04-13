@@ -23,6 +23,10 @@ def get_manager_by_manager_username(db: Session, manager_username: str):
     db_manager = db.query(models.Manager).filter(models.Manager.manager_username == manager_username).one()
     return db_manager
 
+def get_manager_by_manager_id(db: Session, manager_id: int):
+    db_manager = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).one()
+    return db_manager
+
 def update_manager_username_by_manager_id(db: Session, manager_id: int, new_manager_username: str):
     db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_username: new_manager_username})
     db.commit()
