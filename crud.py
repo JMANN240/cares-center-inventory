@@ -23,6 +23,10 @@ def get_manager_by_manager_username(db: Session, manager_username: str):
     db_manager = db.query(models.Manager).filter(models.Manager.manager_username == manager_username).one()
     return db_manager
 
+def get_manager_by_manager_id(db: Session, manager_id: int):
+    db_manager = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).one()
+    return db_manager
+
 def update_manager_username_by_manager_id(db: Session, manager_id: int, new_manager_username: str):
     db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_username: new_manager_username})
     db.commit()
@@ -118,6 +122,10 @@ def update_item_name_by_item_id(db: Session, item_id: int, new_item_name: str):
 
 def update_item_quantity_by_item_id(db: Session, item_id: int, new_item_quantity):
     db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_quantity: new_item_quantity})
+    db.commit()
+
+def update_item_quantity_by_item_id_relative(db: Session, item_id: int, item_quantity_delta: float):
+    db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_quantity: models.Item.item_quantity + item_quantity_delta})
     db.commit()
 
 def delete_item_by_item_id(db: Session, item_id: int):
@@ -247,6 +255,7 @@ def create_transaction_item(db: Session, transaction_item = schemas.TransactionI
     db.add(db_transaction_item)
     db.commit()
     db.refresh(db_transaction_item)
+    return db_transaction_item
 
 def get_transaction_items_by_transaction_id(db: Session, transaction_id: int):
     return db.query(models.TransactionItem).filter(models.TransactionItem.transaction_id == transaction_id).all()
@@ -262,11 +271,12 @@ def create_donor_weight(db: Session, donor_weight:schemas.DonorWeightCreate):
     db_donor_weight = models.DonorWeight(
         donor_id = donor_weight.donor_id,
         transaction_id = donor_weight.transaction_id,
-        weight = donor_weight.donor_id
+        weight = donor_weight.weight
     )
     db.add(db_donor_weight)
     db.commit()
     db.refresh(db_donor_weight)
+    return db_donor_weight
 
 def get_donor_weights_by_transaction_id(db: Session, transaction_id: int):
     return db.query(models.DonorWeight).filter(models.DonorWeight.transaction_id == transaction_id).all()

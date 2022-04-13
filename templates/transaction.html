@@ -11,18 +11,24 @@
 	<link href="/static/css/transaction.css" rel ="stylesheet">
 
 	<script defer src="static/js/html5-qrcode.min.js"></script>
+	<script defer src="/static/js/util.js"></script>
 	<script defer src="/static/js/transaction.js"></script>
 
 	<title>Transaction Page</title> 
 </head>
 
 <body>
-	<div id="camera" class="flex column centered">
-		<div id="reader"></div>
-	</div>
 	<div id="items" class="flex column"></div>
-	<div id="donor-weights" class="flex column"></div>
-	<div id="buttons" class="flex row"></div>
+	<div id="reader-weights-buttons" class="flex column">
+		<div id="reader" class="flex centered"></div>
+		<div class="flex row grow">
+			<div id="buttons" class="flex column">
+				<input type="text" id="student-id" placeholder="Student ID">
+				<button id="submit-transaction">Submit</button>
+			</div>
+			<div id="donor-weights" class="flex column"></div>
+		</div>
+	</div>
 	<div id="footer" class="flex row">
 		<a href="/" class="flex row centered"><button>Back</button></a>
 	</div>

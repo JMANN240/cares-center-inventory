@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <link href="/static/css/global.css" rel="stylesheet">
+
+    <title>CARESIM</title>
+</head>
+
+<body>
+    <h1>This is a test!</h1>
+    <div style="width: 500px" id="reader"></div>
+    <button id="logout">Log Out</button>
+    <script src="static/js/html5-qrcode.min.js"></script>
+    <script>
+        let cart = [];
+
+        let onScanSuccess = (decodedText, decodedResult) => {
+            if (!cart.includes(decodedText)) {
+                cart.push(decodedText);
+                console.log(cart);
+            }
+        }
+
+        let html5Qrcode = new Html5Qrcode("reader");
+        html5Qrcode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, onScanSuccess)
+
+        document.querySelector('#logout').addEventListener('click', async () => {
+            let res = await fetch('/api/manager/logout', {
+                method: 'POST'
+            });
+            window.location.href = window.location.href;
+        });
+    </script>
+</body>
+
+</html>

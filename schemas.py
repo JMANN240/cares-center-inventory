@@ -6,7 +6,7 @@ class ManagerBase(BaseModel):
     manager_firstname: str
     manager_lastname: str
     manager_username: str
-    is_admin: bool
+    is_admin: bool = False
 
 class ManagerCreate(ManagerBase):
     password: str # When creating a manager it takes the actual password to hash and then store
