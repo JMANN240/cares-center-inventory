@@ -17,9 +17,18 @@ getManagers = async () => {
     }
     // populate columns
     for (const manager of managers) {
+        console.log(manager);
+        let firstname = document.createElement("div")
+        firstname.classList.add("entry")
+        firstname.innerHTML = manager.manager_firstname
+        firstNameColumn.appendChild(firstname)
+        let lastname = document.createElement("div")
+        lastname.classList.add("entry")
+        lastname.innerHTML = manager.manager_lastname
+        lastNameColumn.appendChild(lastname)
         let username = document.createElement("div")
         username.classList.add("entry")
-        username.innerHTML = manager.manager_name
+        username.innerHTML = manager.manager_username
         usernameColumn.appendChild(username)
     }
 }
