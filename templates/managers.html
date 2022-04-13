@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script defer src="/static/js/index.js"></script>
     <script defer src="/static/js/managers.js"></script>
 
     <link href="/static/css/global.css" rel ="stylesheet">
@@ -35,10 +34,10 @@
 
         <div id = "entry-list" class = "flex row"> 
             <div id = "first-name-column" class = "flex column">
-
+                <div> fn </div>
             </div>    
             <div id = "last-name-column" class = "flex column">
-
+                <div> ln </div>
             </div>        
             <div id = "username-column" class = "flex column">
 
@@ -50,27 +49,27 @@
         
     </div>
 
-    <button type="button" id = "add-entry">&nbsp+&nbsp</button> 
-    <button type="button" id = "deactivate-entry">&nbspx&nbsp</button> 
+    <button id="add-entry" class="modal-button">&nbsp+&nbsp</button> 
+    <button id="deactivate-entry" class="modal-button">&nbspX&nbsp</button> 
 
     <div id="add-modal" class="modal">
         <div class="flex column">
-          <button type="button" id="add-close">&nbspx&nbsp</button>
+          <button id="add-close">&nbspx&nbsp</button>
           <h2>Add new manager</h2>
           <input type="text" id="add-first-name" placeholder="First Name">
           <input type="text" id="add-last-name" placeholder="Last Name">
           <input type="text" id="add-username" placeholder="Username">
           <input type="password" id="add-password" placeholder="Password">
-          <button type="button" id="add-submit">Submit</button>
+          <button id="add-submit">Submit</button>
         </div>
       
     </div>
     <div id="deactivate-modal" class="modal">
         <div class="flex column">
-          <button type="button" id="deactivate-close">&nbspx&nbsp</button>
+          <button id="deactivate-close">&nbspx&nbsp</button>
           <h2>Deactivate a manager</h2>
           <input type="text" id="deactivate-username" placeholder="Username">
-          <button type="button" id="deactivate-submit">Confirm</button>
+          <button id="deactivate-submit">Confirm</button>
         </div>
       
     </div>
