@@ -3,7 +3,7 @@ body {
     padding: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 90vh 10vh;
+    grid-template-rows: 9fr 1fr;
 }
 
 .donor-weight, .item {
