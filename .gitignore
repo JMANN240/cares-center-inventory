@@ -7,3 +7,6 @@ env
 
 # database files
 *.db
+
+# macOS filesystem files
+.DS_Store
