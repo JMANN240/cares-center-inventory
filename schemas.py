@@ -3,17 +3,18 @@ from typing import Optional
 
 # Manager
 class ManagerBase(BaseModel):
-    manager_name: str
+    manager_firstname: str
+    manager_lastname: str
+    manager_username: str
+    is_admin: bool
 
 class ManagerCreate(ManagerBase):
     password: str # When creating a manager it takes the actual password to hash and then store
 
-class ManagerDelete(ManagerBase):
-    pass
-
 class Manager(ManagerBase):
     manager_id: int
     passhash: str # But when returning a manager it returns the stored hash
+    is_active: bool
 
     class Config:
         orm_mode = True
@@ -35,8 +36,7 @@ class Donor(DonorBase):
 class ItemBase(BaseModel):
     item_name: str
     item_points: int
-    item_front_quantity: int = 0
-    item_back_quantity: int = 0
+    item_quantity: int = 0
     donor_id: int
 
 class ItemCreate(ItemBase):
