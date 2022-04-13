@@ -108,7 +108,7 @@ let onScanSuccess = async (barcode) => {
     const barcodes = items.map(getProp("item_barcode"));
     if (!barcodes.includes(barcode)) {
 
-        let item_res = await fetch(`/api/item/${barcode}`);
+        let item_res = await fetch(`/api/item/barcode/${barcode}`);
         let item = await item_res.json();
         let donor_res = await fetch(`/api/donor/${item.donor_id}`);
         let donor = await donor_res.json();
