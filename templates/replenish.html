@@ -12,24 +12,24 @@
     </head>
     
 	<body>
-		<button>Return</button>
-		<h3>Cares Inventory</h3>
-		<h3>Management Page</h3>
-		<div class="flex row">
-			<button>Search</button>
-			<button>Add Item</button>
+		<div id="search" class="flex row">
+			<h3>Search</h3>
+			<input type="text" placeholder="Name" id="name-input">
+			<input type="text" placeholder="Qty" id="qty-input">
+			<input type="text" placeholder="Donor" id="donor-input">
+			<input type="text" placeholder="Points" id="points-input">
 		</div>
-		<div class="flex row">
-			<div><input type="text" placeholder="Name"></div>
-			<div><input type="text" placeholder="Donor"></div>
-			<div><input type="text" placeholder="Weight"></div>
-			<div><input type="text" placeholder="Points"></div>
+		<div id="items" class="flex column">
+			<div class="item-entry flex row even">
+				<input type="text" placeholder="Name" id="create-name-input">
+				<input type="text" placeholder="Qty" id="create-qty-input">
+				<input type="text" placeholder="Donor" id="create-donor-input">
+				<input type="text" placeholder="Points" id="create-points-input">
+				<button id="create-item">Create</button>
+			</div>
 		</div>
-		<div class="flex row">
-			<div id = "NameColumns" class = "flex column"> <h4>NAME</h4> </div>
-			<div id = "DonorColumns" class = "flex column"> <h4>DONOR</h4> </div>
-			<div id = "WeightColumns" class = "flex column"> <h4>WEIGHT</h4> </div>
-			<div id = "PointColumns" class = "flex column"> <h4>POINTS</h4> </div>
+		<div id="footer" class="flex row">
+			<a href="/" class="flex row centered"><button>Back</button></a>
 		</div>
 	</body>
     

@@ -1,3 +1,21 @@
+#items {
+    width: 90vw;
+    flex-grow: 1;
+    overflow-y: scroll;
+    border: 4px solid white;
+    border-radius: 1vw;
+}
+
+#footer, #search {
+    width: 96vw;
+    margin: 2vw;
+}
+
+.item-entry {
+    border: 4px solid white;
+    border-radius: 0;
+}
+
 h3{
     font-size: 80px;
     margin: 0;
@@ -19,21 +37,8 @@ h4{
     justify-content: center;
 }
 
-.rowStyle {
-    display: flex;
-    flex-direction: row;
-}
-
 input {
-    width: 15vw;
+    font-size: 2vw;
+    width: 10vw;
 }
 
-#NameColumns, #DonorColumns, #WeightColumns, #PointColumns {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(auto-fill, 100px);
-    grid-row-gap: .5em;
-    grid-column-gap: 1em;
-    background-color: white;
-  }
