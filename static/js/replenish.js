@@ -226,6 +226,10 @@ apply_button.addEventListener('click', async (e) => {
             })
         });
     }
+    apply_button.classList.add("good-flash");
+    setTimeout(() => {
+        apply_button.classList.remove("good-flash");
+    }, 1000);
 });
 
 let init = async () => {
