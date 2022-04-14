@@ -6,4 +6,4 @@ __pycache__/
 env
 
 # database files
-*.db
+database.db
