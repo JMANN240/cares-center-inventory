@@ -4,6 +4,7 @@ from database import SessionLocal
 
 def populate_managers():
     with SessionLocal() as db:
+        crud.create_manager(db, schemas.ManagerCreate(manager_firstname="fn", manager_lastname="ln", manager_username="admin", password="test"))
         crud.create_manager(db, schemas.ManagerCreate(manager_firstname="Riley", manager_lastname="Libens", manager_username="rlibens", password="rlib"))
         crud.create_manager(db, schemas.ManagerCreate(manager_firstname="JT", manager_lastname="Raber", manager_username="jraber", password="jrab"))
         crud.create_manager(db, schemas.ManagerCreate(manager_firstname="Jason", manager_lastname="Abounader", manager_username="jabounader", password="jabo"))
