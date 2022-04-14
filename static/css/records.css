@@ -1,0 +1,63 @@
+#transactions {
+    width: 96vw;
+    margin: 2vw;
+    flex-grow: 1;
+    overflow-y: scroll;
+    border: 4px solid white;
+    border-radius: 1vw;
+}
+
+#footer {
+    width: 96vw;
+    margin: 2vw;
+}
+
+h1 {
+    font-size: 6vw;
+    color: white;
+    font-weight: lighter;
+    margin: 1vw;
+}
+
+h2 {
+    font-size: 4vw;
+    color: white;
+    font-weight: lighter;
+    margin: 0.5vw;
+}
+
+p {
+    font-size: 2vw;
+    color: white;
+    font-weight: lighter;
+    margin: 0.5vw;
+}
+
+.transaction {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    border: 4px solid white;
+    border-radius: 1vw;
+    padding: 1vw;
+    margin: 1vw;
+}
+
+.info {
+    flex-grow: 1;
+}
+
+.records {
+    flex-grow: 1;
+}
+
+.donor-record {
+    border: 4px solid white;
+    border-radius: 1vw;
+    padding: 1vw;
+    margin: 1vw;
+}
+
+.item-record {
+    margin-left: 4vw;
+}

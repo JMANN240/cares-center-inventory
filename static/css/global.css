@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 
+* {
+    font-family: "Roboto", sans-serif;
+}
+
 @keyframes slideInTop {
     0% {
         transform: translateY(-80%);
@@ -20,9 +24,28 @@
     }
 }
 
+@keyframes badFlash {
+    from {
+        background-color: red;
+    }
+}
+
+.bad-flash {
+    animation-name: badFlash;
+    animation-duration: 1s;
+}
+
+html {
+    height: -webkit-fill-available;
+    overflow: hidden;
+}
+
 body {
     width: 100vw;
     height: 100vh;
+    height: -webkit-fill-available;
+    margin: 0;
+    padding: 0;
 
     background: #141e30; /* fallback for old browsers */
     background: -webkit-linear-gradient(
@@ -40,12 +63,22 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    font-family: "Roboto", sans-serif;
 }
 
 .flex {
     display: flex;
+}
+
+.nowrap {
+    flex-wrap: nowrap;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.grow {
+    flex-grow: 1;
 }
 
 .row {
@@ -61,6 +94,22 @@ body {
     justify-content: center;
 }
 
+.stretch {
+    align-items: stretch;
+}
+
+.even {
+    justify-content: space-evenly;
+}
+
+.outlined { 
+    outline: 1px solid black;
+}
+
+.fade-in {
+    animation: 2s ease-out 0s 1 fadeIn;
+}
+
 h1 {
     margin: 0vh 2vw 2vh 2vw;
     color: white;
@@ -68,14 +117,16 @@ h1 {
     text-align: center;
     font-size: 10vh;
     text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
-    animation: 2s ease-out 0s 1 fadeIn;
+}
+
+a {
+    text-decoration: none;
 }
 
 input {
     margin: 1vh;
     padding: 1vh;
-    min-width: 3vh;
-    border-radius: 200px;
+    border-radius: 1ch;
     border: 0;
     background-color: rgba(255, 255, 255, 0.5);
     text-align: center;
@@ -83,7 +134,6 @@ input {
     font-weight: bold;
     font-size: 4vh;
     text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-    animation: 2s ease-out 0s 1 fadeIn;
 }
 
 input::placeholder {
@@ -102,8 +152,7 @@ input:focus::placeholder {
 button {
     margin: 1vh;
     padding: 1vh;
-    min-width: 40vh;
-    border-radius: 200px;
+    border-radius: 1ch;
     border: 0;
     text-align: center;
     font-weight: bold;
@@ -111,10 +160,9 @@ button {
     background-color: rgba(255, 255, 255, 1);
     font-size: 4vh;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    animation: 2s ease-out 0s 1 fadeIn;
 }
 
-button:hover {
+button:active{
     transition: all 0.2s ease-out;
     background-color: gold;
 }
