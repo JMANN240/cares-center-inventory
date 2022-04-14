@@ -5,6 +5,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<script defer src="/static/js/replenish.js"></script>
+
 		<link href="/static/css/global.css" rel="stylesheet">
         <link href="/static/css/replenish.css" rel ="stylesheet">
 
@@ -13,23 +15,20 @@
     
 	<body>
 		<div id="search" class="flex row">
-			<h3>Search</h3>
-			<input type="text" placeholder="Name" id="name-input">
-			<input type="text" placeholder="Qty" id="qty-input">
-			<input type="text" placeholder="Donor" id="donor-input">
-			<input type="text" placeholder="Points" id="points-input">
-		</div>
-		<div id="items" class="flex column">
 			<div class="item-entry flex row even">
-				<input type="text" placeholder="Name" id="create-name-input">
-				<input type="text" placeholder="Qty" id="create-qty-input">
-				<input type="text" placeholder="Donor" id="create-donor-input">
-				<input type="text" placeholder="Points" id="create-points-input">
-				<button id="create-item">Create</button>
+				<h3>Search</h3>
+				<input type="text" placeholder="Name" id="name-input">
+				<input type="text" placeholder="Qty" id="qty-input">
+				<input type="text" placeholder="Donor" id="donor-input">
+				<input type="text" placeholder="Points" id="points-input">
 			</div>
 		</div>
+		<div id="items" class="flex column">
+
+		</div>
 		<div id="footer" class="flex row">
-			<a href="/" class="flex row centered"><button>Back</button></a>
+			<a href="/" class="flex row centered"><button id="back-button">Back</button></a>
+			<button id="apply">Apply</button>
 		</div>
 	</body>
     

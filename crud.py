@@ -124,6 +124,14 @@ def update_item_quantity_by_item_id(db: Session, item_id: int, new_item_quantity
     db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_quantity: new_item_quantity})
     db.commit()
 
+def update_item_donor_by_item_id(db: Session, item_id: int, new_donor_id):
+    db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.donor_id: new_donor_id})
+    db.commit()
+
+def update_item_points_by_item_id(db: Session, item_id: int, new_item_points):
+    db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_points: new_item_points})
+    db.commit()
+
 def update_item_quantity_by_item_id_relative(db: Session, item_id: int, item_quantity_delta: float):
     db.query(models.Item).filter(models.Item.item_id == item_id).update({models.Item.item_quantity: models.Item.item_quantity + item_quantity_delta})
     db.commit()
