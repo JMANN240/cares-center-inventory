@@ -21,22 +21,6 @@ from typing import Optional
 
 models.Base.metadata.create_all(bind=engine)
 
-with SessionLocal() as db:
-    try:
-        crud.get_manager_by_manager_username(db, "admin")
-    except sqlalchemy.orm.exc.NoResultFound:
-        crud.create_manager(
-            db, 
-            schemas.ManagerCreate(
-                manager_firstname="fn",
-                manager_lastname="ln",
-                manager_username="admin",
-                password="test",
-                is_admin=True
-            )
-        )
-
-
 def get_db():
     db = SessionLocal()
     try:
@@ -47,6 +31,7 @@ def get_db():
 
 app = FastAPI()
 api = FastAPI()
+test = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/api", api)
@@ -54,7 +39,9 @@ app.mount("/api", api)
 templates = Jinja2Templates(directory="templates")
 
 writerOptions = {
-    'text_distance': 1.0,
+    'module_width': 0.8,
+    'module_height': 32,
+    'text_distance': 2.0,
     'quiet_zone': 2.0,
     'background': '#ffffff',
     'foreground': '#000000',
@@ -97,14 +84,32 @@ async def replenish(request: Request):
 async def transaction(request: Request):
     return templates.TemplateResponse("transaction.html", {"request": request})
 
+@app.get("/records")
+@check_auth
+async def records(request: Request):
+    return templates.TemplateResponse("records.html", {"request": request})
+
 @app.get("/search")
 @check_auth
 async def search(request: Request):
     return templates.TemplateResponse("search.html", {"request": request})
 
-@app.get("/barcode")
-async def barcode(request: Request):
-    return templates.TemplateResponse("barcode.html", {"request": request})
+@app.get("/scan")
+@check_auth
+async def scan(request: Request):
+    return templates.TemplateResponse("scan.html", {"request": request})
+
+@app.get("/barcode", status_code=200)
+def barcode(request: Request, db: Session = Depends(get_db)):
+    item = crud.get_item_by_item_barcode(db, request.query_params['data'])
+    return templates.TemplateResponse("barcode.html", {"request": request, "item": item})
+
+@app.get("/managers")
+@check_auth
+async def managers(request: Request):
+    return templates.TemplateResponse("managers.html", {"request": request})
+
+
 
 @app.get("/managers")
 @check_auth
@@ -161,6 +166,9 @@ def activate_manager(manager_id: int, db: Session = Depends(get_db)):
 @api.get("/manager/deactivate", response_model=schemas.Manager)
 def deactivate_manager(manager_id: int, db: Session = Depends(get_db)):
     return crud.deactivate_manager_by_manager_id(db, manager_id)
+@api.get("/manager/read/{manager_id}", response_model=schemas.Manager)
+def read_manager_by_id(manager_id: int, db: Session = Depends(get_db)):
+    return crud.get_manager_by_manager_id(db, manager_id)
 
 @api.get("/donor", response_model=List[schemas.Donor])
 def read_donors(db: Session = Depends(get_db)):
@@ -178,7 +186,11 @@ def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
 def read_items(db: Session = Depends(get_db)):
     return crud.get_items(db)
 
-@api.get("/item/{item_barcode}", response_model=schemas.Item)
+@api.get("/item/{item_id}", response_model=schemas.Item)
+def read_items_by_id(item_id: int, db: Session = Depends(get_db)):
+    return crud.get_item_by_item_id(db, item_id)
+
+@api.get("/item/barcode/{item_barcode}", response_model=schemas.Item)
 def read_item_by_barcode(item_barcode: str, db: Session = Depends(get_db)):
     return crud.get_item_by_item_barcode(db, item_barcode)
 
@@ -186,7 +198,7 @@ def read_item_by_barcode(item_barcode: str, db: Session = Depends(get_db)):
 def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_item(db, item=item)
 
-@api.get("/transaction", response_class=List[schemas.Transaction])
+@api.get("/transaction", response_model=List[schemas.Transaction])
 def read_transactions(db: Session = Depends(get_db)):
     return crud.get_transactions(db)
 
@@ -194,17 +206,27 @@ def read_transactions(db: Session = Depends(get_db)):
 def create_transaction(transaction: schemas.TransactionCreate, db: Session = Depends(get_db)):
     return crud.create_transaction(db, transaction)
 
+@api.get("/transaction/items", response_model=List[schemas.TransactionItem])
+def get_transaction_items(transaction_id: int, db: Session = Depends(get_db)):
+    return crud.get_transaction_items_by_transaction_id(db, transaction_id)
+
 @api.post("/transaction/item", response_model=schemas.TransactionItem)
 def create_transaction_item(transaction_item: schemas.TransactionItemCreate, db: Session = Depends(get_db)):
+    crud.update_item_quantity_by_item_id_relative(db, transaction_item.item_id, -transaction_item.transaction_quantity)
     return crud.create_transaction_item(db, transaction_item)
 
 @api.post("/transaction/items", response_model=List[schemas.TransactionItem])
 def create_transaction_item(transaction_items: List[schemas.TransactionItemCreate], db: Session = Depends(get_db)):
     items = []
     for transaction_item in transaction_items:
+        crud.update_item_quantity_by_item_id_relative(db, transaction_item.item_id, -transaction_item.transaction_quantity)
         db_item = crud.create_transaction_item(db, transaction_item)
         items.append(db_item)
     return items
+
+@api.get("/transaction/weights", response_model=List[schemas.DonorWeight])
+def get_transaction_items(transaction_id: int, db: Session = Depends(get_db)):
+    return crud.get_donor_weights_by_transaction_id(db, transaction_id)
 
 @api.post("/transaction/weight", response_model=schemas.DonorWeight)
 def create_transaction_donor_weight(donor_weight: schemas.DonorWeightCreate, db: Session = Depends(get_db)):
@@ -218,7 +240,7 @@ def create_transaction_donor_weights(donor_weights: List[schemas.DonorWeightCrea
         weights.append(db_donor_weight)
     return weights
 
-@api.get("/replenishment", response_class=List[schemas.Replenishment])
+@api.get("/replenishment", response_model=List[schemas.Replenishment])
 def read_replenishments(db: Session = Depends(get_db)):
     return crud.get_replenishment(db)
 
@@ -239,7 +261,7 @@ def create_replenishment_item(replenishment_items: List[schemas.ReplenishmentIte
     return items
 
 @api.get("/barcode", status_code=200)
-async def get_barcode(data: str):
+async def get_barcode_image(data: str):
     barcodeImage = bc.get('ean8', data, writer=ImageWriter())
     barcodeFile = BytesIO()
     barcodeImage.write(barcodeFile, writerOptions)
