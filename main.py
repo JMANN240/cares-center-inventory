@@ -109,6 +109,11 @@ def barcode(request: Request, db: Session = Depends(get_db)):
 async def managers(request: Request):
     return templates.TemplateResponse("managers.html", {"request": request})
 
+@app.get("/donors")
+@check_auth
+async def donors(request: Request):
+    return templates.TemplateResponse("donor.html", {"request": request})
+
 
 
 @app.get("/managers")
