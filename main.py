@@ -109,6 +109,11 @@ def barcode(request: Request, db: Session = Depends(get_db)):
 async def managers(request: Request):
     return templates.TemplateResponse("managers.html", {"request": request})
 
+@app.get("/donors")
+@check_auth
+async def donors(request: Request):
+    return templates.TemplateResponse("donor.html", {"request": request})
+
 
 
 @app.get("/managers")
@@ -166,6 +171,11 @@ def read_donors_by_donnor_id(donor_id: int, db: Session = Depends(get_db)):
 @api.post("/donor", response_model=schemas.Donor)
 def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
     return crud.create_donor(db, donor=donor)
+
+@api.put("/donor", response_model=schemas.Donor)
+def create_donor(donor: schemas.Donor, db: Session = Depends(get_db)):
+    crud.update_donor_name_by_donor_id(db, donor.donor_id, donor.donor_name)
+    return donor
 
 @api.get("/item", response_model=List[schemas.Item])
 def read_items(db: Session = Depends(get_db)):
