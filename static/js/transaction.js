@@ -2,10 +2,21 @@ const items_div = document.querySelector('#items');
 const donors_div = document.querySelector('#donor-weights');
 const student_id_input = document.querySelector('#student-id');
 const submit_transaction_button = document.querySelector('#submit-transaction');
+const total_points_display = document.querySelector('#total-points');
 
 let items = [];
 
 let donors = [];
+
+let update_total_points_display = () => {
+    points = 0;
+
+    for (const item of items) {
+        points += (item.transaction_quantity * item.item_points);
+    }
+
+    total_points_display.value = `Total Points: ${points}`;
+}
 
 let constructDonorWeightDOMElement = (donor) => {
     let donor_weight_div = document.createElement('div');
@@ -65,11 +76,13 @@ let constructItemDOMElement = (item) => {
     
     increment_button.addEventListener('click', (e) => {
         item.transaction_quantity+=1;
+        update_total_points_display();
         drawItems();
     });
     
     decrement_button.addEventListener('click', (e) => {
         item.transaction_quantity-=1;
+        update_total_points_display();
         if (item.transaction_quantity == 0) {
             items = items.filter(item => item.transaction_quantity > 0);
             const item_donors = items.map(getProp("donor"));
@@ -117,6 +130,7 @@ let onScanSuccess = async (barcode) => {
         item.transaction_quantity = 1;
 
         items.push(item);
+        update_total_points_display();
         drawItems();
 
         const donor_names = donors.map(getProp("donor_name"))
