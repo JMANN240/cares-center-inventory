@@ -21,22 +21,6 @@ from typing import Optional
 
 models.Base.metadata.create_all(bind=engine)
 
-with SessionLocal() as db:
-    try:
-        crud.get_manager_by_manager_username(db, "admin")
-    except sqlalchemy.orm.exc.NoResultFound:
-        crud.create_manager(
-            db, 
-            schemas.ManagerCreate(
-                manager_firstname="fn",
-                manager_lastname="ln",
-                manager_username="admin",
-                password="test",
-                is_admin=True
-            )
-        )
-
-
 def get_db():
     db = SessionLocal()
     try:
