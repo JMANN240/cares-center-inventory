@@ -29,6 +29,15 @@
             <div class = "flex column">
                 <div> User Name </div>
             </div> 
+
+            <div class = "flex">
+                <select name="Actions" id = "actions">
+                    <option value="default">Actions</option>
+                    <option value="deactivate">Deactivate</option>
+                    <option value="activate">Activate</option>
+                </select>
+                <button type = "button" id = "apply-button">Apply</button>
+            </div>
         
         </div>
 
@@ -42,6 +51,10 @@
             <div id = "username-column" class = "flex column">
 
             </div> 
+
+            <div id = "action-column" class = "flex column">
+                <input type = "checkbox" class = "action-checkbox">
+            </div>
         
         </div>
         
@@ -49,7 +62,7 @@
         
     </div>
 
-    <button id="add-entry" class="modal-button">&nbsp+&nbsp</button> 
+    <button id="edit-button" class="modal-button">&nbsp&#9999;&nbsp</button> 
     <button id="deactivate-entry" class="modal-button">&nbspX&nbsp</button> 
 
     <div id="add-modal" class="modal">
