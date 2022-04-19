@@ -52,6 +52,11 @@ input {
   margin-bottom: 1vh;
 }
 
+.checkbox-entry {
+  margin-top: 3vh;
+  margin-bottom: 2vh;
+}
+
 .first-name-column {
   border-right: 1vw solid;
   border-left: 1vw solid;
@@ -83,39 +88,19 @@ input {
   animation: 2s ease-out 0s 1 fadeIn;
 }
 
-
-
-#apply-button{
-  all: unset;
-  background-color: #101010;
-  color: white;
-  padding: 1vw;
-
-}
-
 #apply-button:active {
   transition: all 0.2s ease-out;
   background-color: gold;
 }
 
-
-#edit-button {
-  width: fit-content;
-  height: fit-content;
+#apply-button {
   bottom: 2vh;
-  right: 2vw;
-  
+  left: 2vw;
 }
 
 #add-entry {
-  bottom: 2vh;
-  right: 2vw;
-}
-
-
-#deactivate-entry {
-  bottom: 2vh;
-  right: 16vw;
+  bottom: 30vh;
+  left: 2vw;
 }
 
 .action-checkbox {

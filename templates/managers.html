@@ -17,7 +17,6 @@
     <h1>Edit Managers</h1>
 
     <div id = "box" class = "flex column centered">
-
         <div id = "top-bar" class = "flex row"> 
             <div class = "flex column">
                 <div> First Name </div>
@@ -27,43 +26,34 @@
             </div>        
                 
             <div class = "flex column">
-                <div> User Name </div>
+                <div> Username </div>
             </div> 
 
-            <div class = "flex">
-                <select name="Actions" id = "actions">
-                    <option value="default">Actions</option>
-                    <option value="deactivate">Deactivate</option>
-                    <option value="activate">Activate</option>
-                </select>
-                <button type = "button" id = "apply-button">Apply</button>
-            </div>
+            <div class = "flex column">
+                <div> Active </div>
+            </div> 
         
+            <div class = "flex column">
+                <div> Admin </div>
+            </div> 
         </div>
 
         <div id = "entry-list" class = "flex row"> 
             <div id = "first-name-column" class = "flex column">
-                <div> fn </div>
             </div>    
             <div id = "last-name-column" class = "flex column">
-                <div> ln </div>
             </div>        
             <div id = "username-column" class = "flex column">
-
-            </div> 
-
-            <div id = "action-column" class = "flex column">
-                <input type = "checkbox" class = "action-checkbox">
             </div>
-        
+            <div id = "active-column" class = "flex column">
+            </div>
+            <div id = "admin-column" class = "flex column">
+            </div>
         </div>
-        
-        
-        
     </div>
 
-    <button id="edit-button" class="modal-button">&nbsp&#9999;&nbsp</button> 
-    <button id="deactivate-entry" class="modal-button">&nbspX&nbsp</button> 
+    <button id="apply-button" class="modal-button">&nbsp&check;&nbsp</button>
+    <button id="add-entry" class="modal-button">&nbsp+&nbsp</button> 
 
     <div id="add-modal" class="modal">
         <div class="flex column">
@@ -75,18 +65,7 @@
           <input type="password" id="add-password" placeholder="Password">
           <button id="add-submit">Submit</button>
         </div>
-      
     </div>
-    <div id="deactivate-modal" class="modal">
-        <div class="flex column">
-          <button id="deactivate-close">&nbspx&nbsp</button>
-          <h2>Deactivate a manager</h2>
-          <input type="text" id="deactivate-username" placeholder="Username">
-          <button id="deactivate-submit">Confirm</button>
-        </div>
-      
-    </div>
-
 </body>
     
 </html>
