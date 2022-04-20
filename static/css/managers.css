@@ -45,16 +45,21 @@ input {
 }
 
 .entry {
+  height: 5vh;
   text-align: center;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 2vw;
   margin-top: 1vh;
   margin-bottom: 1vh;
 }
 
 .checkbox-entry {
-  margin-top: 3vh;
-  margin-bottom: 2vh;
+  height: 5vh;
+  width: 4vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 }
 
 .first-name-column {
