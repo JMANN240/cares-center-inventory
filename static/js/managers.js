@@ -91,9 +91,9 @@ var box = document.getElementById("box");
 // apply button
 var applyBtn = document.getElementById("apply-button");
 
-applyBtn.onclick = function () {
-    updateManagers();
-    getManagers();
+applyBtn.onclick = async function () {
+    await updateManagers();
+    await getManagers();
 }
 
 // add manager nodes
