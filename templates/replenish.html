@@ -5,20 +5,31 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link href="/static/css/replenish.css" rel ="stylesheet">
+		<script defer src="/static/js/replenish.js"></script>
+
 		<link href="/static/css/global.css" rel="stylesheet">
+        <link href="/static/css/replenish.css" rel ="stylesheet">
 
         <title>Inventory Management</title> 
     </head>
     
 	<body>
-	<h3>Cares Inventory</h3>
-	<h3>Management Page</h3>
-	<input type="text" placeholder="Name">
-	<input type="text" placeholder="Donor">
-	<input type="text" placeholder="Weight">
-	<input type="text" placeholder="Points">
-    <button type="button">search</button>
+		<div id="search" class="flex row">
+			<div class="item-entry flex row even">
+				<h3>Search</h3>
+				<input type="text" placeholder="Name" id="name-input">
+				<input type="text" placeholder="Qty" id="qty-input">
+				<input type="text" placeholder="Donor" id="donor-input">
+				<input type="text" placeholder="Points" id="points-input">
+			</div>
+		</div>
+		<div id="items" class="flex column">
+
+		</div>
+		<div id="footer" class="flex row">
+			<a href="/" class="flex row centered"><button id="back-button">Back</button></a>
+			<button id="apply">Apply</button>
+		</div>
 	</body>
     
 </html>

@@ -40,11 +40,12 @@ templates = Jinja2Templates(directory="templates")
 
 writerOptions = {
     'module_width': 0.8,
-    'module_height': 32,
+    'module_height': 16,
     'text_distance': 2.0,
     'quiet_zone': 2.0,
     'background': '#ffffff',
     'foreground': '#000000',
+    'font_size': 30,
 }
 
 # Middleware
@@ -192,6 +193,14 @@ def read_item_by_barcode(item_barcode: str, db: Session = Depends(get_db)):
 @api.post("/item", response_model=schemas.Item)
 def create_item(item: schemas.ItemCreate, db: Session = Depends(get_db)):
     return crud.create_item(db, item=item)
+
+@api.put("/item", response_model=schemas.Item)
+def update_item(item: schemas.Item, db: Session = Depends(get_db)):
+    crud.update_item_name_by_item_id(db, item.item_id, item.item_name)
+    crud.update_item_quantity_by_item_id(db, item.item_id, item.item_quantity)
+    crud.update_item_donor_by_item_id(db, item.item_id, item.donor_id)
+    crud.update_item_points_by_item_id(db, item.item_id, item.item_points)
+    return item
 
 @api.get("/transaction", response_model=List[schemas.Transaction])
 def read_transactions(db: Session = Depends(get_db)):
