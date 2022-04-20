@@ -24,9 +24,20 @@
     }
 }
 
+@keyframes goodFlash {
+    from {
+        background-color: #00ff00;
+    }
+}
+
+.good-flash {
+    animation-name: goodFlash;
+    animation-duration: 1s;
+}
+
 @keyframes badFlash {
     from {
-        background-color: red;
+        background-color: #ff0000;
     }
 }
 
