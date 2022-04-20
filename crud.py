@@ -35,20 +35,28 @@ def get_managers(db: Session):
     return db.query(models.Manager).all()
 
 def promote_manager_by_manager_id(db: Session, manager_id: int):
-    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: True})
+    manager_query = db.query(models.Manager).filter(models.Manager.manager_id == manager_id)
+    manager_query.update({models.Manager.is_admin: True})
     db.commit()
+    return manager_query.one()
 
 def demote_manager_by_manager_id(db: Session, manager_id: int):
-    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: False})
+    manager_query = db.query(models.Manager).filter(models.Manager.manager_id == manager_id)
+    manager_query.update({models.Manager.is_admin: False})
     db.commit()
+    return manager_query.one()
 
 def activate_manager_by_manager_id(db: Session, manager_id: int):
-    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_active: True})
+    manager_query = db.query(models.Manager).filter(models.Manager.manager_id == manager_id)
+    manager_query.update({models.Manager.is_active: True})
     db.commit()
+    return manager_query.one()
 
 def deactivate_manager_by_manager_id(db: Session, manager_id: int):
-    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_active: False})
+    manager_query = db.query(models.Manager).filter(models.Manager.manager_id == manager_id)
+    manager_query.update({models.Manager.is_active: False})
     db.commit()
+    return manager_query.one()
 
 # donor
 def create_donor(db: Session, donor: schemas.DonorCreate):
