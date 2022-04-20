@@ -16,6 +16,7 @@ from typing import List
 from passlib.hash import pbkdf2_sha256
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from typing import Optional
+from functools import wraps
 
 # Setup
 
@@ -51,21 +52,25 @@ writerOptions = {
 # Middleware
 
 def check_auth(route):
-    async def modified_route(request: Request, user_id: Optional[int] = Cookie(None)):
+    @wraps(route)
+    async def modified_route(request: Request, user_id: Optional[int] = Cookie(None), *args, **kwargs):
+        print(f"in check auth, user_id is {user_id}")
         if user_id is not None or request.url.path == '/login':
-            response = await route(request)
+            response = await route(request, user_id, *args, **kwargs)
         else:
             response = RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
         return response
+        
     return modified_route
 
 # Front-end stuff
 
 @app.get("/")
 @check_auth
-async def index(request: Request):
+async def index(request: Request, user_id: Optional[int] = Cookie(None), db: Session = Depends(get_db)):
     print("in index")
-    return templates.TemplateResponse("index.html", {"request": request})
+    manager = crud.get_manager_by_manager_id(db, user_id)
+    return templates.TemplateResponse("index.html", {"request": request, "manager": manager})
 
 @app.get("/login")
 async def login(request: Request):
@@ -135,8 +140,9 @@ def manager_login(login: schemas.Login, response: Response, db: Session = Depend
     try:
         db_manager = crud.get_manager_by_manager_username(db, manager_username=login.username)
         is_password_correct = pbkdf2_sha256.verify(login.password, db_manager.passhash)
+        is_active = db_manager.is_active
     
-        if is_password_correct:
+        if is_password_correct and is_active:
             response.set_cookie(key="user_id", value=db_manager.manager_id, max_age=60*60*6)
             response.status_code = 200
             return response
