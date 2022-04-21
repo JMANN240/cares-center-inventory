@@ -78,7 +78,7 @@ let constructAddManagerDOMElement = () => {
     is_active_div.classList.add('flex', 'column', 'centered');
 
     const is_active_h3 = document.createElement('h3');
-    is_active_h3.classList.add('checkbox-label');
+    is_active_h3.classList.add('label');
     is_active_h3.innerHTML = "Active"
 
     const is_active_input = document.createElement('input');
@@ -92,7 +92,7 @@ let constructAddManagerDOMElement = () => {
     is_admin_div.classList.add('flex', 'column', 'centered');
 
     const is_admin_h3 = document.createElement('h3');
-    is_admin_h3.classList.add('checkbox-label');
+    is_admin_h3.classList.add('label');
     is_admin_h3.innerHTML = "Admin"
 
     const is_admin_input = document.createElement('input');
@@ -138,10 +138,50 @@ let constructAddManagerDOMElement = () => {
     return manager_entry_div;
 }
 
+let constructManagerHeaderDOMElement = () => {
+    const manager_entry_div = document.createElement('div');
+    manager_entry_div.classList.add('manager-entry', 'flex', 'row', 'even');
+
+    const manager_firstname_input = document.createElement('input');
+    manager_firstname_input.classList.add('label');
+    manager_firstname_input.type = 'text';
+    manager_firstname_input.value = "First Name";
+    manager_firstname_input.readOnly = true;
+
+    const manager_lastname_input = document.createElement('input');
+    manager_lastname_input.classList.add('label');
+    manager_lastname_input.type = 'text';
+    manager_lastname_input.value = "Last Name";
+    manager_lastname_input.readOnly = true;
+
+    const manager_username_input = document.createElement('input');
+    manager_username_input.classList.add('label');
+    manager_username_input.type = 'text';
+    manager_username_input.value = "Username";
+    manager_username_input.readOnly = true;
+
+    const is_active_h3 = document.createElement('h3');
+    is_active_h3.classList.add('label');
+    is_active_h3.innerHTML = "Active";
+
+    const is_admin_h3 = document.createElement('h3');
+    is_admin_h3.classList.add('label');
+    is_admin_h3.innerHTML = "Admin";
+
+    manager_entry_div.appendChild(manager_firstname_input);
+    manager_entry_div.appendChild(manager_lastname_input);
+    manager_entry_div.appendChild(manager_username_input);
+    manager_entry_div.appendChild(is_active_h3);
+    manager_entry_div.appendChild(is_admin_h3);
+
+    return manager_entry_div;
+}
+
 let draw_managers = () => {
     managers_div.innerHTML = "";
 
     managers_div.appendChild(constructAddManagerDOMElement());
+    managers_div.appendChild(constructManagerHeaderDOMElement());
 
     for (const manager of global_managers) {
 
@@ -180,13 +220,6 @@ let draw_managers = () => {
             manager.manager_username = manager_username_input.value;
         });
 
-        const is_active_div = document.createElement('div');
-        is_active_div.classList.add('flex', 'column', 'centered');
-
-        const is_active_h3 = document.createElement('h3');
-        is_active_h3.classList.add('checkbox-label');
-        is_active_h3.innerHTML = "Active"
-
         const is_active_input = document.createElement('input');
         is_active_input.type = 'checkbox';
         is_active_input.id = 'is-active-input';
@@ -195,16 +228,6 @@ let draw_managers = () => {
         is_active_input.addEventListener('change', (e) => {
             manager.is_active = is_active_input.checked;
         });
-
-        is_active_div.appendChild(is_active_h3);
-        is_active_div.appendChild(is_active_input);
-
-        const is_admin_div = document.createElement('div');
-        is_admin_div.classList.add('flex', 'column', 'centered');
-
-        const is_admin_h3 = document.createElement('h3');
-        is_admin_h3.classList.add('checkbox-label');
-        is_admin_h3.innerHTML = "Admin"
 
         const is_admin_input = document.createElement('input');
         is_admin_input.type = 'checkbox';
@@ -215,14 +238,11 @@ let draw_managers = () => {
             manager.is_admin = is_admin_input.checked;
         });
 
-        is_admin_div.appendChild(is_admin_h3);
-        is_admin_div.appendChild(is_admin_input);
-
         manager_entry_div.appendChild(manager_firstname_input);
         manager_entry_div.appendChild(manager_lastname_input);
         manager_entry_div.appendChild(manager_username_input);
-        manager_entry_div.appendChild(is_active_div);
-        manager_entry_div.appendChild(is_admin_div);
+        manager_entry_div.appendChild(is_active_input);
+        manager_entry_div.appendChild(is_admin_input);
 
         managers_div.appendChild(manager_entry_div);
     }

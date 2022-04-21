@@ -60,12 +60,17 @@ h4{
   height: 80%;
 }
 
-.checkbox-label {
-  width: 10vw;
+input.label {
+  background-color: transparent;
+}
+
+h3.label {
+  width: 9vw;
   font-size: 3vw
 }
 
 input[type="checkbox"] {
   width: 5vh;
   height: 5vh;
+  margin: 1vw;
 }
