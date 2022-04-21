@@ -156,6 +156,15 @@ def manager_logout(response: Response):
 def read_managers(db: Session = Depends(get_db)):
     return crud.get_managers(db)
 
+@api.put("/manager/update", response_model=schemas.Manager)
+def update_manager(manager: schemas.Manager, db: Session = Depends(get_db)):
+    crud.update_manager_firstname_by_manager_id(db, manager.manager_id, manager.manager_firstname)
+    crud.update_manager_lastname_by_manager_id(db, manager.manager_id, manager.manager_lastname)
+    crud.update_manager_username_by_manager_id(db, manager.manager_id, manager.manager_username)
+    crud.update_manager_active_by_manager_id(db, manager.manager_id, manager.is_active)
+    crud.update_manager_admin_by_manager_id(db, manager.manager_id, manager.is_admin)
+    return manager
+
 @api.get("/manager/promote", response_model=schemas.Manager)
 def promote_manager(manager_id: int, db: Session = Depends(get_db)):
     return crud.promote_manager_by_manager_id(db, manager_id)
@@ -193,7 +202,7 @@ def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
     return crud.create_donor(db, donor=donor)
 
 @api.put("/donor", response_model=schemas.Donor)
-def create_donor(donor: schemas.Donor, db: Session = Depends(get_db)):
+def update_donor(donor: schemas.Donor, db: Session = Depends(get_db)):
     crud.update_donor_name_by_donor_id(db, donor.donor_id, donor.donor_name)
     return donor
 

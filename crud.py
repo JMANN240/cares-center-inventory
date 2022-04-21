@@ -27,8 +27,24 @@ def get_manager_by_manager_id(db: Session, manager_id: int):
     db_manager = db.query(models.Manager).filter(models.Manager.manager_id == manager_id).one()
     return db_manager
 
+def update_manager_firstname_by_manager_id(db: Session, manager_id: int, new_manager_firstname: str):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_firstname: new_manager_firstname})
+    db.commit()
+
+def update_manager_lastname_by_manager_id(db: Session, manager_id: int, new_manager_lastname: str):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_lastname: new_manager_lastname})
+    db.commit()
+
 def update_manager_username_by_manager_id(db: Session, manager_id: int, new_manager_username: str):
     db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.manager_username: new_manager_username})
+    db.commit()
+
+def update_manager_active_by_manager_id(db: Session, manager_id: int, new_manager_active: bool):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_active: new_manager_active})
+    db.commit()
+
+def update_manager_admin_by_manager_id(db: Session, manager_id: int, new_manager_admin: bool):
+    db.query(models.Manager).filter(models.Manager.manager_id == manager_id).update({models.Manager.is_admin: new_manager_admin})
     db.commit()
 
 def get_managers(db: Session):

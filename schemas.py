@@ -7,6 +7,7 @@ class ManagerBase(BaseModel):
     manager_lastname: str
     manager_username: str
     is_admin: bool = False
+    is_active: bool = True
 
 class ManagerCreate(ManagerBase):
     password: str # When creating a manager it takes the actual password to hash and then store
@@ -14,7 +15,6 @@ class ManagerCreate(ManagerBase):
 class Manager(ManagerBase):
     manager_id: int
     passhash: str # But when returning a manager it returns the stored hash
-    is_active: bool
 
     class Config:
         orm_mode = True
