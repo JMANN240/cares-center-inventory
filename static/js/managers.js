@@ -94,6 +94,10 @@ var applyBtn = document.getElementById("apply-button");
 applyBtn.onclick = async function () {
     await updateManagers();
     await getManagers();
+    applyBtn.classList.add("good-flash");
+    setTimeout(() => {
+        applyBtn.classList.remove("good-flash");
+    }, 1000);
 }
 
 // add manager nodes

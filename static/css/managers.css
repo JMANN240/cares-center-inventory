@@ -73,7 +73,6 @@ input {
 }
 
 .modal-button {
-  all: unset;
   position: absolute;
 
   margin: 0.25ch;
@@ -90,12 +89,6 @@ input {
   width: 2ch;
   height: 2ch;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  animation: 2s ease-out 0s 1 fadeIn;
-}
-
-#apply-button:active {
-  transition: all 0.2s ease-out;
-  background-color: gold;
 }
 
 #apply-button {

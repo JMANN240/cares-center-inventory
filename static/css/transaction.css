@@ -91,12 +91,3 @@ input[type="text"] {
     border: 1px solid black;
     color: navy;
 }
-
-input[type="text"]::placeholder {
-    color: lightgray;
-}
-
-input[type="text"]:focus::placeholder {
-    color: unset;
-    text-shadow: unset;
-}
