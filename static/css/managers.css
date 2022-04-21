@@ -65,12 +65,12 @@ input.label {
 }
 
 h3.label {
-  width: 9vw;
+  width: 11vw;
   font-size: 3vw
 }
 
 input[type="checkbox"] {
   width: 5vh;
   height: 5vh;
-  margin: 1vw;
+  margin: 1vw 2vw;
 }
