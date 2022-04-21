@@ -16,7 +16,6 @@ from typing import List
 from passlib.hash import pbkdf2_sha256
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from typing import Optional
-from functools import wraps
 
 # Setup
 
@@ -32,7 +31,6 @@ def get_db():
 
 app = FastAPI()
 api = FastAPI()
-test = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/api", api)
@@ -51,24 +49,15 @@ writerOptions = {
 
 # Middleware
 
-def check_auth(route):
-    @wraps(route)
-    async def modified_route(request: Request, user_id: Optional[int] = Cookie(None), *args, **kwargs):
-        print(f"in check auth, user_id is {user_id}")
-        if user_id is not None or request.url.path == '/login':
-            response = await route(request, user_id, *args, **kwargs)
-        else:
-            response = RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
-        return response
-        
-    return modified_route
+def check_auth(request, user_id):
+    return (user_id is not None or request.url.path == '/login')
 
 # Front-end stuff
 
 @app.get("/")
-@check_auth
 async def index(request: Request, user_id: Optional[int] = Cookie(None), db: Session = Depends(get_db)):
-    print("in index")
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     manager = crud.get_manager_by_manager_id(db, user_id)
     return templates.TemplateResponse("index.html", {"request": request, "manager": manager})
 
@@ -76,55 +65,59 @@ async def index(request: Request, user_id: Optional[int] = Cookie(None), db: Ses
 async def login(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
-@app.get("/register")
-async def register(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
-
 @app.get("/replenish")
-@check_auth
-async def replenish(request: Request):
+async def replenish(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("replenish.html", {"request": request})
 
 @app.get("/transaction")
-@check_auth
-async def transaction(request: Request):
+async def transaction(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("transaction.html", {"request": request})
 
 @app.get("/records")
-@check_auth
-async def records(request: Request):
+async def records(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("records.html", {"request": request})
 
 @app.get("/search")
-@check_auth
-async def search(request: Request):
+async def search(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("search.html", {"request": request})
 
 @app.get("/scan")
-@check_auth
-async def scan(request: Request):
+async def scan(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("scan.html", {"request": request})
 
 @app.get("/barcode", status_code=200)
-def barcode(request: Request, db: Session = Depends(get_db)):
+def barcode(request: Request, user_id: Optional[int] = Cookie(None), db: Session = Depends(get_db)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     item = crud.get_item_by_item_barcode(db, request.query_params['data'])
     return templates.TemplateResponse("barcode.html", {"request": request, "item": item})
 
 @app.get("/managers")
-@check_auth
-async def managers(request: Request):
+async def managers(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("managers.html", {"request": request})
 
 @app.get("/donors")
-@check_auth
-async def donors(request: Request):
+async def donors(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("donor.html", {"request": request})
 
-
-
 @app.get("/managers")
-@check_auth
-async def managers(request: Request):
+async def managers(request: Request, user_id: Optional[int] = Cookie(None)):
+    if not check_auth(request, user_id):
+        return RedirectResponse(f"/login?redirect={str(urlsafe_b64encode(bytes(request.url.path, encoding='utf-8')))[2:-1]}")
     return templates.TemplateResponse("managers.html", {"request": request})
 
 
@@ -163,6 +156,15 @@ def manager_logout(response: Response):
 def read_managers(db: Session = Depends(get_db)):
     return crud.get_managers(db)
 
+@api.put("/manager/update", response_model=schemas.Manager)
+def update_manager(manager: schemas.Manager, db: Session = Depends(get_db)):
+    crud.update_manager_firstname_by_manager_id(db, manager.manager_id, manager.manager_firstname)
+    crud.update_manager_lastname_by_manager_id(db, manager.manager_id, manager.manager_lastname)
+    crud.update_manager_username_by_manager_id(db, manager.manager_id, manager.manager_username)
+    crud.update_manager_active_by_manager_id(db, manager.manager_id, manager.is_active)
+    crud.update_manager_admin_by_manager_id(db, manager.manager_id, manager.is_admin)
+    return manager
+
 @api.get("/manager/promote", response_model=schemas.Manager)
 def promote_manager(manager_id: int, db: Session = Depends(get_db)):
     return crud.promote_manager_by_manager_id(db, manager_id)
@@ -200,7 +202,7 @@ def create_donor(donor: schemas.DonorCreate, db: Session = Depends(get_db)):
     return crud.create_donor(db, donor=donor)
 
 @api.put("/donor", response_model=schemas.Donor)
-def create_donor(donor: schemas.Donor, db: Session = Depends(get_db)):
+def update_donor(donor: schemas.Donor, db: Session = Depends(get_db)):
     crud.update_donor_name_by_donor_id(db, donor.donor_id, donor.donor_name)
     return donor
 
