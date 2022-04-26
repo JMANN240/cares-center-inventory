@@ -1,95 +1,81 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean, UniqueConstraint
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, Boolean
 from sqlalchemy.orm import relationship
 from database import Base
 
-class Donor(Base):
-    __tablename__ = "donor"
-
-    donor_id = Column(Integer, primary_key=True)
-    donor_name = Column(String, unique=True, nullable=False)
-
-    to_item = relationship("Item", back_populates="to_donor")
-    to_donor_weight = relationship("DonorWeight", back_populates="to_donor")
-
 class Item(Base):
-    __tablename__ = "item"
+    __tablename__ = "items"
 
-    item_id = Column(Integer, primary_key=True)
-    item_name = Column(String, nullable=False)
-    item_points = Column(Integer, nullable=False)
-    item_quantity = Column(Integer, nullable=False, default=0)
-    item_barcode = Column(String, nullable=False)
-    donor_id = Column(Integer, ForeignKey("donor.donor_id"))
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    points = Column(Integer, nullable=False)
+    quantity = Column(Integer, nullable=False, default=0)
+    barcode = Column(String, nullable=False)
+    donor_id = Column(Integer, ForeignKey("donors.id"))
 
-    to_donor = relationship("Donor", back_populates="to_item")
-    to_replenishment_item = relationship("ReplenishmentItem", back_populates="to_item")
-    to_transaction_item = relationship("TransactionItem", back_populates="to_item")
+    donor = relationship("Donor", back_populates="items")
+
+
+
+class Donor(Base):
+    __tablename__ = "donors"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, unique=True, nullable=False)
+    weighs = Column(Boolean, nullable=False, default=False)
+
+    items = relationship("Item", back_populates="donor")
+    weights = relationship("DonorWeight", back_populates="donor")
+
+
 
 class Manager(Base):
-    __tablename__ = "manager"
+    __tablename__ = "managers"
 
-    manager_id = Column(Integer, primary_key=True)
-    manager_firstname = Column(String, nullable=False)
-    manager_lastname = Column(String, nullable=False)
-    manager_username = Column(String, nullable=False, unique=True)
+    id = Column(Integer, primary_key=True)
+    firstname = Column(String, nullable=False)
+    lastname = Column(String, nullable=False)
+    username = Column(String, nullable=False, unique=True)
     passhash = Column(String, nullable=False)
     is_active = Column(Boolean, nullable=False, default=True)
     is_admin = Column(Boolean, nullable=False)
-    
-    UniqueConstraint('manager_firstname', 'manager_lastname', name='unique_manager_name')
 
-    to_replenishment = relationship("Replenishment", back_populates="to_manager")
-    to_transaction = relationship("Transaction", back_populates="to_manager")
+    transactions = relationship("Transaction", back_populates="manager")
 
-class Replenishment(Base):
-    __tablename__ = "replenishment"
 
-    replenish_id = Column(Integer, primary_key=True)
-    replenish_time = Column(Integer, nullable=False)
-    manager_id = Column(Integer, ForeignKey("manager.manager_id"))
-
-    to_manager = relationship("Manager", back_populates="to_replenishment")
-    to_replenishment_item = relationship("ReplenishmentItem", back_populates="to_replenishment")
-
-class ReplenishmentItem(Base):
-    __tablename__ = "replenishment_item"
-
-    item_id = Column(Integer, ForeignKey("item.item_id"), primary_key=True)
-    replenish_id = Column(Integer, ForeignKey("replenishment.replenish_id"), primary_key=True)
-    replenish_quantity = Column(Integer, nullable=False)
-
-    to_item = relationship("Item", back_populates="to_replenishment_item")
-    to_replenishment = relationship("Replenishment", back_populates="to_replenishment_item")
 
 class Transaction(Base):
-    __tablename__ = "transaction"
+    __tablename__ = "transactions"
 
-    transaction_id = Column(Integer, primary_key=True)
-    transaction_time = Column(Integer, nullable=False)
-    customer_id = Column(Integer, nullable=False)
-    manager_id = Column(Integer, ForeignKey("manager.manager_id"))
+    id = Column(Integer, primary_key=True)
+    time = Column(Integer, nullable=False)
+    student_id = Column(Integer, nullable=False)
+    manager_id = Column(Integer, ForeignKey("managers.id"))
 
-    to_manager = relationship("Manager", back_populates="to_transaction")
-    to_transaction_item = relationship("TransactionItem", back_populates="to_transaction")
-    to_donor_weight = relationship("DonorWeight", back_populates="to_transaction")
+    manager = relationship("Manager", back_populates="transactions")
+    items = relationship("TransactionItem", back_populates="transaction")
+    weights = relationship("DonorWeight", back_populates="transaction")
+
+
 
 class TransactionItem(Base):
-    __tablename__ = "transaction_item"
+    __tablename__ = "transaction_items"
 
-    item_id = Column(Integer, ForeignKey("item.item_id"), primary_key=True)
-    transaction_id = Column(Integer, ForeignKey("transaction.transaction_id"), primary_key=True)
-    transaction_quantity = Column(Integer, nullable=False)
+    item_id = Column(Integer, ForeignKey("items.id"), primary_key=True)
+    transaction_id = Column(Integer, ForeignKey("transactions.id"), primary_key=True)
+    quantity = Column(Integer, nullable=False)
 
-    to_item = relationship("Item", back_populates="to_transaction_item")
-    to_transaction = relationship("Transaction", back_populates="to_transaction_item")
+    item = relationship("Item")
+    transaction = relationship("Transaction", back_populates="items")
+
+
 
 class DonorWeight(Base):
-    __tablename__ = "donor_weight"
+    __tablename__ = "donor_weights"
     
-    donor_id = Column(Integer, ForeignKey("donor.donor_id"), primary_key=True)
-    transaction_id = Column(Integer, ForeignKey("transaction.transaction_id"), primary_key=True)
+    donor_id = Column(Integer, ForeignKey("donors.id"), primary_key=True)
+    transaction_id = Column(Integer, ForeignKey("transactions.id"), primary_key=True)
     weight = Column(Float, nullable=False, default=0.0)
 
-    to_transaction = relationship("Transaction", back_populates="to_donor_weight")
-    to_donor = relationship("Donor", back_populates="to_donor_weight")
+    transaction = relationship("Transaction", back_populates="weights")
+    donor = relationship("Donor", back_populates="weights")
     

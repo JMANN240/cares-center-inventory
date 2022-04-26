@@ -1,11 +1,9 @@
-const params = new URLSearchParams(window.location.search)
-
 let username_input = document.querySelector('#username');
 let password_input = document.querySelector('#password');
 let login_button = document.querySelector('#login');
 
 let submitLogin = async () => {
-    let res = await fetch('/api/manager/login', {
+    let res = await fetch('/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -15,10 +13,11 @@ let submitLogin = async () => {
             password: password_input.value
         })
     });
+    let text = await res.text();
     if (res.status == 200) {
-        let redirect = params.get('redirect') ?? urlsafe_b64encode('/');
-        redirect = urlsafe_b64decode(redirect);
-        window.location.href = redirect;
+        window.location.href = '/';
+    } else if (res.status == 406) {
+        flash(text);
     }
 }
 

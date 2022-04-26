@@ -1,0 +1,27 @@
+img {
+    vertical-align: middle;
+    height: 4vh;
+}
+
+table, th, td {
+    border: 1px solid white;
+    border-radius: 0.25ch;
+}
+
+table {
+    border-spacing: 0.5ch;
+}
+
+th, td {
+    text-align: center;
+    padding: 0.125ch;
+}
+
+th {
+    font-weight: 700;
+}
+
+td {
+    font-weight: 100;
+}
+

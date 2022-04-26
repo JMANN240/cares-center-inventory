@@ -1,47 +1,30 @@
 body {
-    margin: 0;
-    padding: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 9fr 1fr;
 }
 
 .donor-weight, .item {
-    background-color: white;
-    border-radius: 20px;
-    margin: 1vh;
-    padding: 0.5vh;
-} 
-
-h1 {
-    margin: 0;
-    padding: 0;
-    color: navy;
-    font-size: 4vw;
+    color: var(--fill);
+    background-color: var(--stroke);
+    border-radius: 1ch;
+    margin: 2ch;
+    padding: 1ch;
 }
 
-h2 {
-    font-size: 3vw;
-    margin: 0;
-    padding: 0;
-    color: navy;
-    
-}
-
-h1.count, h2.count {
-    padding: 0.5ch;
-    border: 1px solid navy;
-    border-radius: 0.5ch;
+.bordered {
+    border: 2px solid var(--fill);
+    border-radius: 0.25ch;
 }
 
 button.small {
-    margin: 0.5ch;
+    margin: 0.25ch;
     padding: 1ch;
     min-width: unset;
     width: 3ch;
     height: 3ch;
     border: 1px solid navy;
-    font-size: large;
+    font-size: 1.5vmin;
     border-radius: 1.5ch;
 }
 
@@ -84,10 +67,6 @@ button.small {
     outline: 1px solid black;
 }
 
-input[type="text"] {
-    background-color: white;
-    border-radius: 1ch;
-    font-size: 3vw;
-    border: 1px solid black;
-    color: navy;
+#back-button {
+    margin-left: 4vw;
 }

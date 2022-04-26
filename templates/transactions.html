@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Transactions
+{% endblock %}
+
+{% block head %}
+    <link href='/static/css/transactions.css' rel ='stylesheet'>
+    <script defer src='/static/js/transactions.js'></script>
+{% endblock %}
+
+{% block body %}
+	<div id="search" class="flex row bar">
+		<h1 class="bigger">Search</h1>
+		<input id="manager-search-input" class="medium" type="text" placeholder="Manager">
+		<input id="student-id-search-input" class="medium" type="text" placeholder="Student ID">
+		<input id="date-time-search-input" class="medium" type="text" placeholder="Date/Time">
+		<input id="donor-search-input" class="medium" type="text" placeholder="Donor">
+		<input id="item-search-input" class="medium" type="text" placeholder="Item">
+	</div>
+	<div id="transactions" class="flex column">
+		
+	</div>
+	<div id="footer" class="flex row bar">
+		<a href="/" class="flex row centered"><button class='big'>Back</button></a>
+	</div>
+{% endblock %}
