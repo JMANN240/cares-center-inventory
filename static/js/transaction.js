@@ -137,8 +137,8 @@ const addItem = async (barcode) => {
         const donor_names = donors.map(donor => donor.name)
 
         if (!donor_names.includes(item.donor.name) && item.donor.weighs) {
-            donor.weight = "";
-            donors.push(donor)
+            item.donor.weight = "";
+            donors.push(item.donor)
         }
 
         drawDonorWeights();
