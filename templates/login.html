@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="/static/css/global.css" rel="stylesheet">
-    <link href="/static/css/login.css" rel="stylesheet">
+{% block title %}
+    Login
+{% endblock %}
 
-    <script defer src="/static/js/util.js"></script>
+{% block head %}
     <script defer src="/static/js/login.js"></script>
+{% endblock %}
 
-    <title>Login</title>
-</head>
-
-<body class>
-    <img src="/static/res/logo.png" alt="Cares Center" >
-    <h1 class="fade-in">CARES CENTER</h1>
-    <input type="text" id="username" placeholder="Username" class="fade-in">
-    <input type="password" id="password" placeholder="Password" class="fade-in">
-    <button type="button" id="login" class="fade-in">Login</button>
-</body>
-
-</html>
+{% block body %}
+    <div class="flex column centered">
+        <img id='logo' src="/static/res/logo.png" alt="Cares Center" style="width: 40vh; height: 40vh;">
+        <div class="flex column strech">
+            <h1 class="massive">CARES CENTER</h1>
+            <input type="text" id="username" placeholder="Username" class="big">
+            <input type="password" id="password" placeholder="Password" class="big">
+            <button id="login" class="big">Login</button>
+        </div>
+    </div>
+{% endblock %}

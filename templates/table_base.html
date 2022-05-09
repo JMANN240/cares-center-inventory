@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{table|proper}}
+{% endblock %}
+
+{% block head %}
+    <link href='/static/css/table_base.css' rel ='stylesheet'>
+    <script defer src='/static/js/table_base.js'></script>
+    <script defer src='/static/js/{{table|lower}}.js'></script>
+{% endblock %}
+
+{% block body %}
+    <div id="search" class="flex row bar">
+        <h1 class="bigger">Search</h1>
+    </div>
+    <div id="entries" class="flex column box">
+        <table id="entries-table">
+
+        </table>
+    </div>
+    <div id="create" class="flex row bar">
+        <h1 class="bigger">New</h1>
+        <button class='big' id="create-button">Create</button>
+    </div>
+    <div id="footer" class="flex row bar">
+        <button class='big' id="back-button">Back</button>
+        <button class='big' id="apply-button">Apply</button>
+    </div>
+{% endblock %}

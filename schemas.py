@@ -1,109 +1,90 @@
 from pydantic import BaseModel, validator
-from typing import Optional
-
-# Manager
-class ManagerBase(BaseModel):
-    manager_firstname: str
-    manager_lastname: str
-    manager_username: str
-    is_admin: bool = False
-    is_active: bool = True
-
-class ManagerCreate(ManagerBase):
-    password: str # When creating a manager it takes the actual password to hash and then store
-
-class Manager(ManagerBase):
-    manager_id: int
-    passhash: str # But when returning a manager it returns the stored hash
-
-    class Config:
-        orm_mode = True
-
-# Donor
-class DonorBase(BaseModel):
-    donor_name: str
-
-class DonorCreate(DonorBase):
-    pass
-
-class Donor(DonorBase):
-    donor_id: int
-
-    class Config:
-        orm_mode = True
+from typing import Optional, List
 
 # Item
 class ItemBase(BaseModel):
-    item_name: str
-    item_points: int
-    item_quantity: int = 0
+    name: str
+    points: int
+    quantity: int = 0
     donor_id: int
 
 class ItemCreate(ItemBase):
     pass
 
 class Item(ItemBase):
-    item_id: int
-    item_barcode: str
+    id: int
+    barcode: str
 
     class Config:
         orm_mode = True
 
-# ReplensihmentItem
-class ReplenishmentItemBase(BaseModel):
-    item_id: int
-    replenish_id: int
-    replenish_quantity: int
 
-class ReplenishmentItemCreate(ReplenishmentItemBase):
+
+# Donor
+class DonorBase(BaseModel):
+    name: str
+    weighs: bool = False
+
+class DonorCreate(DonorBase):
     pass
 
-class ReplensihmentItem(ReplenishmentItemBase):
-    pass
+class Donor(DonorBase):
+    id: int
 
     class Config:
         orm_mode = True
 
-# Replenishment
-class ReplenishmentBase(BaseModel):
-    manager_id: int
 
-class ReplenishmentCreate(ReplenishmentBase):
-    pass
 
-class Replenishment(ReplenishmentBase):
-    replenish_time: int
-    replenish_id: int
+# Manager
+class ManagerBase(BaseModel):
+    firstname: str
+    lastname: str
+    username: str
+    is_admin: bool = False
+    is_active: bool = True
 
-    class Config:
-        orm_mode = True
+class ManagerCreate(ManagerBase):
+    password: str
 
-# TransactionItem
-class TransactionItemBase(BaseModel):
-    item_id: int
-    transaction_id: int
-    transaction_quantity: int
-
-class TransactionItemCreate(TransactionItemBase):
-    pass
-
-class TransactionItem(TransactionItemBase):
-    pass
+class Manager(ManagerBase):
+    id: int
+    passhash: str
 
     class Config:
         orm_mode = True
+
+
+
 
 # Transaction
 class TransactionBase(BaseModel):
-    customer_id: int
+    student_id: int
     manager_id: int
 
 class TransactionCreate(TransactionBase):
     pass
     
 class Transaction(TransactionBase):
-    transaction_time: int
+    time: int
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+
+# TransactionItem
+class TransactionItemBase(BaseModel):
+    item_id: int
     transaction_id: int
+    quantity: int
+
+class TransactionItemCreate(TransactionItemBase):
+    pass
+
+class TransactionItem(TransactionItemBase):
+    pass
 
     class Config:
         orm_mode = True
@@ -122,6 +103,49 @@ class DonorWeight(DonorWeightBase):
 
     class Config:
         orm_mode = True
+
+
+
+# Now with relationships for reading
+
+class ItemRead(Item):
+    donor: Donor
+
+    class Config:
+        orm_mode = True
+
+class DonorRead(Donor):
+    items: List[Item]
+    weights: List[DonorWeight]
+
+    class Config:
+        orm_mode = True
+
+class ManagerRead(Manager):
+    transactions: List[Transaction]
+
+    class Config:
+        orm_mode = True
+
+class TransactionItemRead(TransactionItem):
+    item: ItemRead
+    transaction: Transaction
+
+class DonorWeightRead(DonorWeight):
+    transaction: Transaction
+    donor: Donor
+
+    class Config:
+        orm_mode = True
+
+class TransactionRead(Transaction):
+    manager: Manager
+    items: List[TransactionItemRead]
+    weights: List[DonorWeightRead]
+
+    class Config:
+        orm_mode = True
+
 
 # Barcodes
 

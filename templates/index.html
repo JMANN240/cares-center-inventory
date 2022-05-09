@@ -12,16 +12,18 @@
     <title>Action Select</title> 
 </head>
 
-<body>
-    <h1 class="fade-in">CARES Inventory</h1>
-    <a href="/transaction"><button class="fade-in">Perform Transaction</button></a>
-    <a href="/records"><button class="fade-in">Transactions Records</button></a>
-    {% if manager.is_admin %}
-    <a href="/replenish"><button class="fade-in">Edit Inventory</button></a>
-    <a href="/managers"><button class="fade-in">Edit Managers</button></a>
-    {% endif %}
-    <a href="/donors"><button class="fade-in">Edit Donors</button></a>
-    <button id="logout" class="fade-in">Logout</button>
+<body class='flex column centered'>
+    <div class="flex column strech">
+        <h1 class='massive'>CARES Inventory</h1>
+        <a href="/transaction"><button class='big'>Perform Transaction</button></a>
+        <a href="/transactions"><button class='big'>Transactions Records</button></a>
+        <a href="/items"><button class='big'>Edit Items</button></a>
+        {% if manager.is_admin %}
+        <a href="/managers"><button class='big'>Edit Managers</button></a>
+        {% endif %}
+        <a href="/donors"><button class='big'>Edit Donors</button></a>
+        <button class='big' id="logout">Logout</button>
+    </div>
 </body>
     
 </html>

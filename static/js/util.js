@@ -1,14 +1,12 @@
-let urlsafe_b64encode = (string) => {
-    console.log(string);
-    return btoa(string.replace(/\//g, '_').replace(/\+/g, '-'))
-}
+const flash_div = document.querySelector('#flash');
 
-let urlsafe_b64decode = (base64) => {
-    return atob(base64).replace(/_/g, '/').replace(/-/g, '+')
-}
-
-let getProp = (prop) => {
-    return x => x[prop];
+let flash = (text, ms=10000) => {
+    flash_div.style.display = "flex";
+    flash_div.innerHTML = text;
+    setTimeout(() => {
+        flash_div.style.display = "none";
+        flash_div.innerHTML = "";
+    }, ms);
 }
 
 let setCookie = (cookie_name, cookie_value, max_age=31536000) => {
